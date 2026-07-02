@@ -56,6 +56,6 @@ Ninguna de las 5 skills de diseño del proyecto.
 - [ ] ¿La lógica nueva con ramas condicionales tiene test unitario?
 - [ ] ¿Los componentes con estado/interacción tienen test de React Testing Library?
 - [ ] ¿El flujo crítico Home → proyecto y el formulario siguen cubiertos por el E2E de Playwright?
-- [ ] ¿`npm run test` pasa en verde localmente antes de entregar?
+- [ ] ¿`pnpm test` pasa en verde localmente antes de entregar?
 - [ ] ¿Se ha evitado testear JSX puramente de presentación sin lógica?
 - [ ] ¿Cualquier bug detectado durante el testing se ha reportado al agente responsable, no parcheado por fuera de su dominio?
