@@ -20,6 +20,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored skill packages (installed via the Skills CLI) — not our code.
+    ".claude/skills/**",
   ]),
 ]);
 
