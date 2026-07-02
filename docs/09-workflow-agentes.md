@@ -21,6 +21,14 @@ Separar por dominio da tres ventajas concretas:
                                 │ analiza y descompone
                                 ▼
                  ┌──────────────────────────┐
+                 │      Staff Engineer       │  ← solo si activa sus disparadores
+                 │ (arquitectura/librería/   │     (nueva librería importante, cambio
+                 │  refactor/tecnología      │      de estructura, refactor grande,
+                 │  nueva, deuda técnica)    │      deuda técnica, tecnología nueva)
+                 └──────────────┬────────────┘
+                                │ valida (o no interviene si es trabajo rutinario)
+                                ▼
+                 ┌──────────────────────────┐
                  │   Frontend Architect      │  ← estructura, tipado, estado
                  └──────────────┬────────────┘
                                 │
@@ -54,22 +62,23 @@ Separar por dominio da tres ventajas concretas:
    un punto fijo del flujo.
 ```
 
-`Frontend Architect` es el único punto de paso obligatorio antes de que `UI Designer`, `Design Engineer` y `Content Writer` puedan trabajar, porque los tres necesitan una estructura de componentes/datos ya definida sobre la que operar. Esos tres pueden trabajar **en paralelo** entre sí (no hay dependencia entre vestir un componente, animarlo y redactar su texto). `Testing Engineer` y `Accessibility Engineer` también pueden solaparse. `Performance Engineer` y `Code Reviewer` van al final porque necesitan ver el resultado combinado.
+`Staff Engineer` es un punto de paso **condicional**: solo entra si la tarea activa uno de sus disparadores (ver `staff-engineer.md` § Cuándo debe utilizarse); si es trabajo rutinario dentro de patrones ya validados, `Frontend Architect` procede directamente. `Frontend Architect` sí es el punto de paso obligatorio antes de que `UI Designer`, `Design Engineer` y `Content Writer` puedan trabajar, porque los tres necesitan una estructura de componentes/datos ya definida sobre la que operar. Esos tres pueden trabajar **en paralelo** entre sí (no hay dependencia entre vestir un componente, animarlo y redactar su texto). `Testing Engineer` y `Accessibility Engineer` también pueden solaparse. `Performance Engineer` y `Code Reviewer` van al final porque necesitan ver el resultado combinado.
 
-## 3. Los 10 agentes (resumen — el detalle completo está en cada archivo)
+## 3. Los 11 agentes (resumen — el detalle completo está en cada archivo)
 
-| Agente | Dominio | No hace |
-|---|---|---|
-| [`orchestrator`](../.claude/agents/orchestrator.md) | Coordinación y delegación | Implementar funcionalidades grandes |
-| [`frontend-architect`](../.claude/agents/frontend-architect.md) | Arquitectura React/TS, estructura, estado | Diseño visual, contenido |
-| [`ui-designer`](../.claude/agents/ui-designer.md) | Layout, color, tipografía, sistema visual | Lógica, motion, arquitectura |
-| [`design-engineer`](../.claude/agents/design-engineer.md) | Motion, microinteracciones, easter eggs | Arquitectura, contenido |
-| [`content-writer`](../.claude/agents/content-writer.md) | Todo el texto en español | Código, incluso archivos de contenido `.ts` |
-| [`github-manager`](../.claude/agents/github-manager.md) | READMEs, CI, releases, perfil de GitHub | Código de la app, copy del portfolio |
-| [`testing-engineer`](../.claude/agents/testing-engineer.md) | Vitest, RTL, Playwright | Implementar la funcionalidad probada |
-| [`performance-engineer`](../.claude/agents/performance-engineer.md) | Lighthouse, bundle, imágenes, fuentes | Funcionalidades nuevas, diseño |
-| [`accessibility-engineer`](../.claude/agents/accessibility-engineer.md) | WCAG, teclado, ARIA, contraste | Funcionalidades nuevas, diseño |
-| [`code-reviewer`](../.claude/agents/code-reviewer.md) | Revisión final de calidad | Desarrollar nada, solo revisa |
+| Agente                                                                  | Dominio                                                                  | No hace                                                                       |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| [`orchestrator`](../.claude/agents/orchestrator.md)                     | Coordinación y delegación                                                | Implementar funcionalidades grandes                                           |
+| [`staff-engineer`](../.claude/agents/staff-engineer.md)                 | Visión técnica global, validación de decisiones grandes/nuevas, mentoría | Diseño visual, contenido, sustituir a `frontend-architect` en el día a día    |
+| [`frontend-architect`](../.claude/agents/frontend-architect.md)         | Ejecución de arquitectura React/TS del día a día, estructura, estado     | Diseño visual, contenido, decisiones grandes sin validar con `staff-engineer` |
+| [`ui-designer`](../.claude/agents/ui-designer.md)                       | Layout, color, tipografía, sistema visual                                | Lógica, motion, arquitectura                                                  |
+| [`design-engineer`](../.claude/agents/design-engineer.md)               | Motion, microinteracciones, easter eggs                                  | Arquitectura, contenido                                                       |
+| [`content-writer`](../.claude/agents/content-writer.md)                 | Todo el texto en español                                                 | Código, incluso archivos de contenido `.ts`                                   |
+| [`github-manager`](../.claude/agents/github-manager.md)                 | READMEs, CI, releases, perfil de GitHub                                  | Código de la app, copy del portfolio                                          |
+| [`testing-engineer`](../.claude/agents/testing-engineer.md)             | Vitest, RTL, Playwright                                                  | Implementar la funcionalidad probada                                          |
+| [`performance-engineer`](../.claude/agents/performance-engineer.md)     | Lighthouse, bundle, imágenes, fuentes                                    | Funcionalidades nuevas, diseño                                                |
+| [`accessibility-engineer`](../.claude/agents/accessibility-engineer.md) | WCAG, teclado, ARIA, contraste                                           | Funcionalidades nuevas, diseño                                                |
+| [`code-reviewer`](../.claude/agents/code-reviewer.md)                   | Revisión final de calidad                                                | Desarrollar nada, solo revisa                                                 |
 
 ## 4. Por qué no hay más agentes (SEO, seguridad, despliegue)
 
@@ -81,12 +90,16 @@ El brief permitía añadir agentes adicionales si estaban justificados, no dupli
 
 **Regla para el futuro**: crear un agente nuevo solo cuando un dominio empiece a competir de forma recurrente por la atención de dos o más agentes existentes, o cuando el proyecto adquiera una complejidad real en esa área (p. ej. si se añade backend propio con lógica de negocio no trivial, ahí sí tendría sentido un `backend-engineer`).
 
+**Precedente aplicado — `staff-engineer` (añadido después):** a diferencia de SEO/seguridad/despliegue, la visión técnica global y la mentoría no encajaban en ningún agente existente sin forzarlo: `frontend-architect` está centrado en ejecutar, no en auditar sus propias decisiones grandes con perspectiva de largo plazo, y `code-reviewer` revisa el resultado final, no decide _antes_ de implementar si una arquitectura nueva merece la pena. Por eso se creó como agente aparte en vez de ampliar `frontend-architect` — y para no duplicar responsabilidades, se ajustó `frontend-architect.md` en el mismo cambio para dejar claro que él ejecuta dentro de patrones ya validados y `staff-engineer` valida específicamente los disparadores grandes/nuevos (ver `frontend-architect.md`, nota "Deslinde con `staff-engineer`").
+
 ## 5. Flujo de trabajo típico: funcionalidad nueva
 
 ```
 Nueva funcionalidad
         ↓
    Orchestrator                 → analiza, descompone, decide orden
+        ↓
+  Staff Engineer                → SOLO si activa sus disparadores; si no, se omite
         ↓
  Frontend Architect             → estructura, tipado, interfaz de datos
         ↓
@@ -107,13 +120,20 @@ Nueva funcionalidad
 
 Ejemplo de delegación real — "añadir la ficha del proyecto CourtManager":
 
-1. **Orchestrator** identifica que toca arquitectura (ruta `/proyectos/tennis-tournament`), diseño, posible motion, contenido y tests.
+1. **Orchestrator** identifica que toca arquitectura (ruta `/proyectos/tennis-tournament`), diseño, posible motion, contenido y tests. No activa ningún disparador de `staff-engineer` (es una ruta nueva siguiendo un patrón ya validado), así que se omite.
 2. **Frontend Architect** crea la ruta y confirma que `content/proyectos/tennis-tournament.ts` cumple la interfaz `Proyecto` ya existente (no hace falta ampliarla).
 3. En paralelo: **Content Writer** redacta el texto (ya existe un borrador en `docs/06-estrategia-contenido.md` § 3.2 — lo adapta, no lo reinventa), **UI Designer** monta `ProjectHero`/`TechBadgeList` con los tokens del sistema de diseño, **Design Engineer** añade el hover de las tarjetas de funcionalidad.
 4. **Testing Engineer** añade un test de componente si `ProjectHero` tiene lógica (p. ej. mostrar/ocultar el badge de demo según si `demoUrl` existe). **Accessibility Engineer** verifica navegación y contraste de la página nueva.
 5. **Performance Engineer** confirma que las capturas usan `next/image` y no penalizan LCP.
 6. **Code Reviewer** revisa el conjunto contra la checklist de `AGENTS.md` y emite informe.
 7. **GitHub Manager** no interviene aquí salvo que se quiera enlazar la nueva ficha desde el README de `TennisTournament`.
+
+Ejemplo de delegación con `staff-engineer` interviniendo — "añadir gestión de estado global para favoritos entre secciones":
+
+1. **Orchestrator** detecta que esto activa un disparador de `staff-engineer` (cambio de estrategia de estado, potencialmente una librería nueva tipo Zustand/Jotai).
+2. **Staff Engineer** evalúa: ¿hace falta una librería, o Context + `localStorage` ya resuelve el caso de uso real de un portfolio pequeño? Aplica su checklist mentor (¿solución más sencilla? ¿escala a un año? ¿genera deuda?) y devuelve un veredicto — en este caso probablemente "Context + `localStorage`, sin librería nueva", evitando sobreingeniería.
+3. Con la decisión validada, **Frontend Architect** la implementa (nuevo hook en `lib/`, sin tocar la arquitectura general).
+4. El resto del flujo sigue igual que en el ejemplo anterior (UI Designer/Design Engineer/Content Writer si aplica, tests, revisión).
 
 ## 6. Comunicación entre agentes
 
@@ -152,4 +172,5 @@ Cuando dos agentes especializados dan recomendaciones incompatibles (p. ej. `ui-
 
 - Si un agente empieza a necesitar tocar sistemáticamente archivos fuera de su dominio declarado, es una señal de que su contrato está mal definido — se ajusta el `.md`, no se ignora la restricción.
 - Revisar este documento y `AGENTS.md` § Sistema Multiagente cada vez que se cierre una fase del roadmap (`docs/03-roadmap.md`), igual que se revisa el propio roadmap.
-- Cuando se instalen finalmente las skills pendientes (Emil Design Engineering, Impeccable Style, Taste, UI UX Pro Max, Find Skills — ver `docs/01-plan-general.md` § 6), actualizar la nota de "estado actual" en `ui-designer.md` y `design-engineer.md` para reflejar que ya están disponibles.
+- Las 5 skills de diseño ya están instaladas (`.claude/skills/`, ver `skills-lock.json`); si se añade o retira alguna, actualizar `.claude/skills/README.md`, `AGENTS.md` § Uso de skills y los agentes que la declaren como propia.
+- Si `staff-engineer` empieza a intervenir en trabajo rutinario (señal de que sus disparadores están mal calibrados) o, al contrario, `frontend-architect` toma decisiones grandes sin pasar por él, revisar y ajustar el deslinde de responsabilidades entre ambos antes de que se acumule deuda de coordinación.

@@ -88,32 +88,36 @@ Criterio de qué probar (ver también [`docs/02-arquitectura.md`](./docs/02-arqu
 
 ## Sistema Multiagente
 
-El desarrollo de este portfolio está guiado por un **Orchestrator** y 9 subagentes especializados definidos en [`.claude/agents/`](.claude/agents/), cada uno con una responsabilidad única (SRP). El detalle completo — diagrama, ejemplos de delegación, cómo añadir agentes nuevos y cómo mantener el sistema — está en [`docs/09-workflow-agentes.md`](docs/09-workflow-agentes.md). Esta sección es el resumen operativo.
+El desarrollo de este portfolio está guiado por un **Orchestrator** y 10 subagentes especializados definidos en [`.claude/agents/`](.claude/agents/), cada uno con una responsabilidad única (SRP). El detalle completo — diagrama, ejemplos de delegación, cómo añadir agentes nuevos y cómo mantener el sistema — está en [`docs/09-workflow-agentes.md`](docs/09-workflow-agentes.md). Esta sección es el resumen operativo.
 
 ### Arquitectura general
 
 No existe un agente único que resuelva todo. `orchestrator` analiza cada petición, la descompone por dominio y delega en el especialista correspondiente:
 
-| Agente                   | Responsabilidad única                                                |
-| ------------------------ | -------------------------------------------------------------------- |
-| `orchestrator`           | Analizar, descomponer, delegar, validar el resultado final           |
-| `frontend-architect`     | Arquitectura React/TypeScript, estructura, estado                    |
-| `ui-designer`            | Layout, sistema visual, responsive                                   |
-| `design-engineer`        | Motion, microinteracciones, easter eggs                              |
-| `content-writer`         | Todo el texto en español                                             |
-| `github-manager`         | READMEs, CI, releases, perfil de GitHub                              |
-| `testing-engineer`       | Vitest, React Testing Library, Playwright                            |
-| `performance-engineer`   | Lighthouse, bundle, Core Web Vitals                                  |
-| `accessibility-engineer` | WCAG, teclado, ARIA, contraste                                       |
-| `code-reviewer`          | Revisión final — nunca desarrolla, solo aprueba o devuelve hallazgos |
+| Agente                   | Responsabilidad única                                                                    |
+| ------------------------ | ---------------------------------------------------------------------------------------- |
+| `orchestrator`           | Analizar, descomponer, delegar, validar el resultado final                               |
+| `staff-engineer`         | Visión técnica global — valida decisiones arquitectónicas grandes/nuevas, mentor técnico |
+| `frontend-architect`     | Ejecución de la arquitectura React/TypeScript del día a día, estructura, estado          |
+| `ui-designer`            | Layout, sistema visual, responsive                                                       |
+| `design-engineer`        | Motion, microinteracciones, easter eggs                                                  |
+| `content-writer`         | Todo el texto en español                                                                 |
+| `github-manager`         | READMEs, CI, releases, perfil de GitHub                                                  |
+| `testing-engineer`       | Vitest, React Testing Library, Playwright                                                |
+| `performance-engineer`   | Lighthouse, bundle, Core Web Vitals                                                      |
+| `accessibility-engineer` | WCAG, teclado, ARIA, contraste                                                           |
+| `code-reviewer`          | Revisión final — nunca desarrolla, solo aprueba o devuelve hallazgos                     |
 
 ### Flujo de trabajo recomendado
 
 ```
-Orchestrator → Frontend Architect → (UI Designer + Design Engineer + Content Writer, en paralelo)
+Orchestrator → Staff Engineer (solo si la tarea activa sus disparadores) → Frontend Architect
+            → (UI Designer + Design Engineer + Content Writer, en paralelo)
             → (Testing Engineer + Accessibility Engineer, en paralelo) → Performance Engineer
             → Code Reviewer → Merge
 ```
+
+`staff-engineer` no interviene en trabajo rutinario ya cubierto por patrones existentes — solo cuando `frontend-architect` va a tomar una decisión grande o nueva (nueva librería importante, cambio de estructura, refactor grande, tecnología nueva; ver disparadores completos en `staff-engineer.md`).
 
 `github-manager` es transversal: interviene siempre que hay que documentar o publicar, no en un punto fijo del flujo.
 
