@@ -2,20 +2,24 @@
 
 Cada fase termina en un estado desplegable. No se pasa a la siguiente fase sin revisar la anterior con David.
 
-## Fase 0 — Fundaciones (esta entrega)
+## Fase 0 — Fundaciones ✅ completada
 
 - [x] Investigar los repos reales (`ProyectoWebCoworking`, `TennisTournament`, `PokedexIA`, `TaskPlanner`, `OnePieceAPI`) para basar el contenido en hechos, no en plantillas.
 - [x] Cerrar decisiones de arquitectura, diseño y contenido con David.
 - [x] Producir los documentos de planificación (este set de `docs/`) y `AGENTS.md`.
-- [ ] David revisa y aprueba (o pide cambios) antes de escribir código.
+- [x] David revisa y aprueba antes de escribir código.
 
-## Fase 1 — Scaffolding técnico
+## Fase 1 — Scaffolding técnico ✅ completada
 
-- Crear proyecto Next.js + TypeScript + Tailwind v4, configurar ESLint/Prettier, `tsconfig` estricto.
-- Configurar tokens de diseño (colores, tipografía, espaciado) como CSS variables.
-- Montar layout base: header con navegación, footer, `ThemeToggle`, estructura de `/content`.
-- Configurar Vitest + Testing Library + Playwright (aunque aún no haya mucho que testear).
-- Repo en GitHub con CI mínima (lint + typecheck + test en cada PR).
+- [x] Crear proyecto Next.js 16 + TypeScript + Tailwind v4, configurar ESLint/Prettier, `tsconfig` estricto.
+- [x] pnpm como único gestor de paquetes, Husky + lint-staged + Commitlint (Conventional Commits), skills de diseño instaladas.
+- [x] Configurar tokens de diseño (colores, tipografía, radios) como CSS variables (`globals.css`, `@theme inline` de Tailwind v4).
+- [x] Montar layout base: header con navegación responsive (colapsa a menú móvil) e indicador de sección activa, footer con GitHub/LinkedIn, `ThemeToggle` (persistencia vía `next-themes`, sin flash).
+- [x] Estructura de `/content` (`content/types.ts`) y páginas stub (`/sobre-mi`, `/proyectos`, `/stack`, `/contacto`) para que el nav funcione, sin contenido real todavía.
+- [x] Configurar Vitest + React Testing Library (test real de `ThemeToggle`) + Playwright (smoke test de Home, navegación y tema).
+- [x] Repo en GitHub con CI (`​.github/workflows/ci.yml`): lint + typecheck + test + build en cada push/PR a `main`/`develop`, más job de Playwright E2E.
+
+Verificado en verde: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm test:e2e`, `pnpm build`. Revisado visualmente en claro/oscuro y en 375px/1280px.
 
 ## Fase 2 — MVP de contenido (versión inicial pactada con David)
 
