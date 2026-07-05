@@ -10,6 +10,7 @@
   --color-accent-2: #b48cff;
   --color-success: #4ade80;
   --color-warning: #fbbf24;
+  --color-danger: #f87171;
 }
 
 [data-theme="light"] {
@@ -20,6 +21,7 @@
   --color-border: #e2e2e8;
   --color-accent: #0891b2;
   --color-accent-2: #7c3aed;
+  --color-danger: #dc2626;
 }
 
 @theme inline {
@@ -32,6 +34,7 @@
   --color-accent-2: var(--color-accent-2);
   --color-success: var(--color-success);
   --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
 
   --font-sans: var(--font-inter);
   --font-display: var(--font-space-grotesk);
