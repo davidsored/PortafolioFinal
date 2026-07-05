@@ -31,12 +31,14 @@ Verificado en verde: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm test:e2e`
 - [x] Stack tecnológico (narrativa por categoría, no lista de logos).
 - [x] Contacto: CV descargable, GitHub/LinkedIn, formulario real (`useActionState` + Server Action con Resend, validación server-side, sin secretos ni errores internos expuestos al cliente).
 - [x] Tests: componente de `ContactForm` (Vitest/RTL) + E2E ampliado a Home → ficha de proyecto y envío de contacto (Playwright), cumpliendo el mínimo de `AGENTS.md` § Testing.
+- [x] `RESEND_API_KEY` configurada en `.env.local` y verificada end-to-end: el formulario envía emails reales a `davidsored@gmail.com`.
+- [x] CV real (`public/cv/david-suarez-otero-cv.pdf`) verificado (descarga con `content-type`/tamaño correctos).
+- [x] Capturas reales de los 3 proyectos principales conectadas en `ProjectCard`/`ProjectHero` vía `imagenPortada`.
 
-**Pendiente de David, fuera de mi alcance:**
+**Pendiente, sin bloquear el resto:**
 
-- `RESEND_API_KEY` en `.env.local`/Vercel para que el formulario envíe emails de verdad (por ahora muestra un mensaje genérico pidiendo escribir directamente).
-- PDF real del CV en `public/cv/david-suarez-otero-cv.pdf` (el enlace ya apunta ahí).
-- Capturas reales de los 5 proyectos en `public/projects/*/` (las fichas funcionan sin imagen por decisión explícita).
+- `RESEND_API_KEY` todavía falta añadirla en Vercel (solo está en `.env.local` para desarrollo) — tarea de la Fase 5 (lanzamiento).
+- Capturas de los 2 proyectos secundarios (TaskPlanner, OnePieceAPI) — opcional, mantienen su tratamiento de menor protagonismo sin imagen.
 
 El sitio ya es publicable a nivel de contenido, aunque falte el pulido de la Fase 3.
 
