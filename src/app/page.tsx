@@ -1,13 +1,21 @@
+import type { Metadata } from "next";
+
+import { ClosingCta } from "@/components/home/ClosingCta";
+import { Hero } from "@/components/home/Hero";
+import { ValueProposition } from "@/components/home/ValueProposition";
+
+export const metadata: Metadata = {
+  title: "David Suárez-Otero Redondo — Desarrollador Backend & Fullstack Junior",
+  description:
+    "Desarrollador backend junior especializado en C#, ASP.NET Core y Blazor, ampliando hacia Python e IA. Proyectos reales, no tutoriales.",
+};
+
 export default function Home() {
   return (
-    <div className="mx-auto flex max-w-5xl flex-1 flex-col items-center justify-center px-6 py-24 text-center">
-      <h1 className="font-display text-fg text-3xl font-semibold sm:text-4xl">
-        Portfolio en construcción
-      </h1>
-      <p className="text-fg-muted mt-4 max-w-md text-base">
-        Layout base, tema y navegación listos. El contenido (Hero, proyectos, stack, contacto) llega
-        en la siguiente fase.
-      </p>
+    <div>
+      <Hero />
+      <ValueProposition />
+      <ClosingCta />
     </div>
   );
 }
