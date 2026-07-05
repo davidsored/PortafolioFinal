@@ -16,11 +16,11 @@ export interface Proyecto {
   imagenPortada?: string;
 }
 
-export interface StackItem {
-  categoria: "backend" | "frontend" | "bases-de-datos" | "herramientas";
-  nombre: string;
-  descripcionUso: string;
-  proyectosRelacionados: string[];
+export interface StackCategoria {
+  id: "backend" | "en-expansion" | "frontend" | "bases-de-datos" | "herramientas";
+  titulo: string;
+  tecnologias: string[];
+  narrativa: string;
 }
 
 export interface PerfilInfo {
