@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { Button } from "@/components/ui/Button";
 import type { Proyecto } from "@/content/types";
 
@@ -19,6 +21,19 @@ export function ProjectHero({ proyecto }: { proyecto: Proyecto }) {
         </Button>
         {proyecto.demoUrl && <Button href={proyecto.demoUrl}>Ver demo</Button>}
       </div>
+
+      {proyecto.imagenPortada && (
+        <div className="border-border relative mt-8 aspect-video overflow-hidden rounded-lg border">
+          <Image
+            src={proyecto.imagenPortada}
+            alt={`Captura de ${proyecto.titulo}`}
+            fill
+            sizes="(min-width: 640px) 768px, 100vw"
+            className="object-cover"
+            priority
+          />
+        </div>
+      )}
     </div>
   );
 }

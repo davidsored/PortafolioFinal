@@ -37,4 +37,5 @@ export const coworkingManager: Proyecto = {
     "Diseñar un modelo de disponibilidad/solapes es más delicado de lo que parece a priori (bordes de intervalos, reservas que se solapan parcialmente); fue el primer sitio donde entendí por qué la validación de negocio no puede vivir solo en el frontend.",
   repoUrl: "https://github.com/davidsored/ProyectoWebCoworking",
   principal: true,
+  imagenPortada: "/projects/coworking-manager/cover.png",
 };

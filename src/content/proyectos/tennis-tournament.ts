@@ -41,4 +41,5 @@ export const tennisTournament: Proyecto = {
   repoUrl: "https://github.com/davidsored/TennisTournament",
   demoUrl: "https://tennistournament-98ar.onrender.com",
   principal: true,
+  imagenPortada: "/projects/tennis-tournament/cover.png",
 };

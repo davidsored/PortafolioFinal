@@ -29,4 +29,5 @@ export const pokedexia: Proyecto = {
   repoUrl: "https://github.com/davidsored/PokedexIA",
   demoUrl: "https://pokedex-ia-beta.vercel.app",
   principal: true,
+  imagenPortada: "/projects/pokedexia/cover.png",
 };
