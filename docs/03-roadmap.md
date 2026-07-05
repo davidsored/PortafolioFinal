@@ -21,18 +21,24 @@ Cada fase termina en un estado desplegable. No se pasa a la siguiente fase sin r
 
 Verificado en verde: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm test:e2e`, `pnpm build`. Revisado visualmente en claro/oscuro y en 375px/1280px.
 
-## Fase 2 — MVP de contenido (versión inicial pactada con David)
+## Fase 2 — MVP de contenido ✅ completada
 
-Páginas/secciones, en este orden de construcción:
+- [x] Contenido real en `content/` (perfil, 5 proyectos, stack, sobre mí) transcrito de `docs/06-estrategia-contenido.md`.
+- [x] Componentes base (`Button`, `Card`, `Badge`, `SectionHeading`, `ProjectCard`, `ProjectHero`, `TechBadgeList`).
+- [x] Home: Hero + propuesta de valor + CTA de cierre.
+- [x] Sobre mí.
+- [x] Proyectos: índice (3 principales + 2 secundarios) y ficha dinámica por `slug` (`generateStaticParams`, las 5 se generan como HTML estático).
+- [x] Stack tecnológico (narrativa por categoría, no lista de logos).
+- [x] Contacto: CV descargable, GitHub/LinkedIn, formulario real (`useActionState` + Server Action con Resend, validación server-side, sin secretos ni errores internos expuestos al cliente).
+- [x] Tests: componente de `ContactForm` (Vitest/RTL) + E2E ampliado a Home → ficha de proyecto y envío de contacto (Playwright), cumpliendo el mínimo de `AGENTS.md` § Testing.
 
-1. Home: Hero + propuesta de valor + CTA.
-2. Sobre mí.
-3. Proyectos principales (3 fichas completas: Coworking Manager, CourtManager/TennisTournament, PokedexIA).
-4. Stack tecnológico (sección narrativa, no lista).
-5. Proyectos secundarios (TaskPlanner, OnePieceAPI) en formato reducido.
-6. CV descargable + enlaces GitHub/LinkedIn + contacto.
+**Pendiente de David, fuera de mi alcance:**
 
-Al final de esta fase el sitio es publicable, aunque falte pulido.
+- `RESEND_API_KEY` en `.env.local`/Vercel para que el formulario envíe emails de verdad (por ahora muestra un mensaje genérico pidiendo escribir directamente).
+- PDF real del CV en `public/cv/david-suarez-otero-cv.pdf` (el enlace ya apunta ahí).
+- Capturas reales de los 5 proyectos en `public/projects/*/` (las fichas funcionan sin imagen por decisión explícita).
+
+El sitio ya es publicable a nivel de contenido, aunque falte el pulido de la Fase 3.
 
 ## Fase 3 — Pulido de producto
 
