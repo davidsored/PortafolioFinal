@@ -3,7 +3,7 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/cn";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
@@ -18,6 +18,29 @@ const NAV_LINKS = [
 export function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const wasMenuOpenRef = useRef(false);
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      if (wasMenuOpenRef.current) {
+        menuButtonRef.current?.focus();
+      }
+      wasMenuOpenRef.current = false;
+      return;
+    }
+
+    wasMenuOpenRef.current = true;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isMenuOpen]);
 
   return (
     <header className="border-border bg-bg/80 sticky top-0 z-50 border-b backdrop-blur-sm">
@@ -52,6 +75,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <button
+            ref={menuButtonRef}
             type="button"
             onClick={() => setIsMenuOpen((open) => !open)}
             aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}

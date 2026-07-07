@@ -21,6 +21,7 @@ const PROPUESTAS = [
 export function ValueProposition() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
+      <h2 className="sr-only">Por qué trabajar conmigo</h2>
       <div className="grid gap-6 sm:grid-cols-3">
         {PROPUESTAS.map((propuesta) => (
           <Card key={propuesta.titulo}>
