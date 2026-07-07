@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { ProjectCard } from "@/components/proyectos/ProjectCard";
+import { ScrollReveal, ScrollRevealItem } from "@/components/ui/ScrollReveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { proyectosPrincipales, proyectosSecundarios } from "@/content/proyectos";
 
@@ -19,19 +20,23 @@ export default function ProyectosPage() {
         description="Cada ficha incluye el problema real que resuelve, las decisiones técnicas tomadas y qué aprendí construyéndola."
       />
 
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <ScrollReveal stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {proyectosPrincipales.map((proyecto) => (
-          <ProjectCard key={proyecto.slug} proyecto={proyecto} />
+          <ScrollRevealItem key={proyecto.slug}>
+            <ProjectCard proyecto={proyecto} />
+          </ScrollRevealItem>
         ))}
-      </div>
+      </ScrollReveal>
 
       <div className="mt-16">
         <h2 className="font-display text-fg text-xl font-semibold">Proyectos secundarios</h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
+        <ScrollReveal stagger className="mt-6 grid gap-6 sm:grid-cols-2">
           {proyectosSecundarios.map((proyecto) => (
-            <ProjectCard key={proyecto.slug} proyecto={proyecto} />
+            <ScrollRevealItem key={proyecto.slug}>
+              <ProjectCard proyecto={proyecto} />
+            </ScrollRevealItem>
           ))}
-        </div>
+        </ScrollReveal>
       </div>
     </div>
   );

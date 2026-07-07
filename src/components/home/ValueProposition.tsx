@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/Card";
+import { ScrollReveal, ScrollRevealItem } from "@/components/ui/ScrollReveal";
 
 const PROPUESTAS = [
   {
@@ -22,14 +23,16 @@ export function ValueProposition() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
       <h2 className="sr-only">Por qué trabajar conmigo</h2>
-      <div className="grid gap-6 sm:grid-cols-3">
+      <ScrollReveal stagger className="grid gap-6 sm:grid-cols-3">
         {PROPUESTAS.map((propuesta) => (
-          <Card key={propuesta.titulo}>
-            <h3 className="font-display text-fg text-lg font-semibold">{propuesta.titulo}</h3>
-            <p className="text-fg-muted mt-2 text-sm">{propuesta.descripcion}</p>
-          </Card>
+          <ScrollRevealItem key={propuesta.titulo}>
+            <Card>
+              <h3 className="font-display text-fg text-lg font-semibold">{propuesta.titulo}</h3>
+              <p className="text-fg-muted mt-2 text-sm">{propuesta.descripcion}</p>
+            </Card>
+          </ScrollRevealItem>
         ))}
-      </div>
+      </ScrollReveal>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { TechBadgeList } from "@/components/proyectos/TechBadgeList";
+import { ScrollReveal, ScrollRevealItem } from "@/components/ui/ScrollReveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { stack } from "@/content/stack";
 
@@ -19,17 +20,17 @@ export default function StackPage() {
         description="No es una lista de logos: cada tecnología está aquí porque la he usado para resolver algo concreto."
       />
 
-      <div className="mt-12 space-y-10">
+      <ScrollReveal stagger className="mt-12 space-y-10">
         {stack.map((categoria) => (
-          <div key={categoria.id} className="border-border border-t pt-8">
+          <ScrollRevealItem key={categoria.id} className="border-border border-t pt-8">
             <h2 className="font-display text-fg text-xl font-semibold">{categoria.titulo}</h2>
             <div className="mt-3">
               <TechBadgeList tecnologias={categoria.tecnologias} />
             </div>
             <p className="text-fg-muted mt-4 text-sm leading-relaxed">{categoria.narrativa}</p>
-          </div>
+          </ScrollRevealItem>
         ))}
-      </div>
+      </ScrollReveal>
     </div>
   );
 }

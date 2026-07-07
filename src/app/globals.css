@@ -65,6 +65,25 @@ body {
   box-shadow: 0 0 24px -8px var(--color-accent);
 }
 
+/*
+ * Cross-fade de tema (~200ms): transiciona background/border/color en todo
+ * el árbol al cambiar entre claro y oscuro, para evitar un "flash" al
+ * cambiar `data-theme`. Los componentes con su propia transición de hover
+ * (`transition-colors`, `transition-shadow`, 150ms) declaran una duración
+ * más corta vía clase de Tailwind, que tiene mayor especificidad de cascada
+ * en capas de Tailwind v4 y por tanto gana sobre esta regla de base.
+ */
+@layer base {
+  body,
+  body * {
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease,
+      box-shadow 200ms ease;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

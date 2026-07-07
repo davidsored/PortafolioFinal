@@ -9,7 +9,7 @@ import { TechBadgeList } from "./TechBadgeList";
 export function ProjectCard({ proyecto }: { proyecto: Proyecto }) {
   return (
     <Link href={`/proyectos/${proyecto.slug}`} className="group block">
-      <Card className="hover:border-accent hover:glow-accent h-full">
+      <Card className="hover:border-accent hover:glow-accent h-full transition duration-150 hover:-translate-y-1">
         {proyecto.imagenPortada && (
           <div className="relative -mx-6 -mt-6 mb-4 aspect-video overflow-hidden rounded-t-lg">
             <Image
