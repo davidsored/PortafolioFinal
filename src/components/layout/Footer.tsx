@@ -1,3 +1,4 @@
+import { OnePieceEggLoader } from "@/components/easter-eggs/OnePieceEggLoader";
 import { GitHubIcon, LinkedInIcon } from "@/components/ui/icons";
 
 export function Footer() {
@@ -6,7 +7,10 @@ export function Footer() {
   return (
     <footer className="border-border mt-auto border-t">
       <div className="text-fg-muted mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm sm:flex-row">
-        <p>© {year} David Suárez-Otero Redondo</p>
+        <div className="flex items-center gap-2">
+          <p>© {year} David Suárez-Otero Redondo</p>
+          <OnePieceEggLoader />
+        </div>
 
         <div className="flex items-center gap-4">
           <a

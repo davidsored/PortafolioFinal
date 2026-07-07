@@ -1,12 +1,23 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/cn";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+
+// Easter egg opt-in (docs/05-sistema-diseno.md §7): carga perezosa y sin SSR,
+// solo se monta el bundle si el usuario efectivamente triplica el click.
+const ZeldaEgg = dynamic(
+  () => import("@/components/easter-eggs/ZeldaEgg").then((mod) => mod.ZeldaEgg),
+  { ssr: false },
+);
+
+const LOGO_CLICK_TIMEOUT_MS = 600;
+const LOGO_CLICKS_TO_TRIGGER = 3;
 
 const NAV_LINKS = [
   { href: "/sobre-mi", label: "Sobre mí" },
@@ -20,6 +31,12 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const wasMenuOpenRef = useRef(false);
+
+  // Easter egg de Zelda: 3 clics seguidos en el logo, con timeout entre
+  // ellos para no confundirlo con un triple-click accidental del ratón.
+  const [zeldaTrigger, setZeldaTrigger] = useState(0);
+  const logoClickCountRef = useRef(0);
+  const logoClickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -42,16 +59,43 @@ export function Header() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    return () => {
+      if (logoClickTimeoutRef.current) clearTimeout(logoClickTimeoutRef.current);
+    };
+  }, []);
+
+  function handleLogoClick() {
+    setIsMenuOpen(false);
+
+    logoClickCountRef.current += 1;
+
+    if (logoClickTimeoutRef.current) {
+      clearTimeout(logoClickTimeoutRef.current);
+    }
+
+    if (logoClickCountRef.current >= LOGO_CLICKS_TO_TRIGGER) {
+      logoClickCountRef.current = 0;
+      setZeldaTrigger((count) => count + 1);
+      return;
+    }
+
+    logoClickTimeoutRef.current = setTimeout(() => {
+      logoClickCountRef.current = 0;
+    }, LOGO_CLICK_TIMEOUT_MS);
+  }
+
   return (
     <header className="border-border bg-bg/80 sticky top-0 z-50 border-b backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
         <Link
           href="/"
           className="font-display text-fg text-lg font-semibold"
-          onClick={() => setIsMenuOpen(false)}
+          onClick={handleLogoClick}
         >
           David Suárez-Otero
         </Link>
+        {zeldaTrigger > 0 && <ZeldaEgg key={zeldaTrigger} />}
 
         <nav aria-label="Principal" className="hidden items-center gap-6 sm:flex">
           {NAV_LINKS.map((link) => {
