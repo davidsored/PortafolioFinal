@@ -23,8 +23,15 @@ export function ContactForm() {
           required
           maxLength={100}
           defaultValue={state.values?.nombre}
+          aria-invalid={state.errors?.nombre ? "true" : undefined}
+          aria-describedby={state.errors?.nombre ? "nombre-error" : undefined}
           className="border-border bg-bg text-fg focus-visible:outline-accent mt-1 w-full rounded-md border px-3 py-2 text-sm focus-visible:outline-2"
         />
+        {state.errors?.nombre && (
+          <p id="nombre-error" className="text-danger mt-1 text-sm">
+            {state.errors.nombre}
+          </p>
+        )}
       </div>
 
       <div>
@@ -38,8 +45,15 @@ export function ContactForm() {
           required
           maxLength={200}
           defaultValue={state.values?.email}
+          aria-invalid={state.errors?.email ? "true" : undefined}
+          aria-describedby={state.errors?.email ? "email-error" : undefined}
           className="border-border bg-bg text-fg focus-visible:outline-accent mt-1 w-full rounded-md border px-3 py-2 text-sm focus-visible:outline-2"
         />
+        {state.errors?.email && (
+          <p id="email-error" className="text-danger mt-1 text-sm">
+            {state.errors.email}
+          </p>
+        )}
       </div>
 
       <div>
@@ -54,8 +68,15 @@ export function ContactForm() {
           maxLength={2000}
           rows={5}
           defaultValue={state.values?.mensaje}
+          aria-invalid={state.errors?.mensaje ? "true" : undefined}
+          aria-describedby={state.errors?.mensaje ? "mensaje-error" : undefined}
           className="border-border bg-bg text-fg focus-visible:outline-accent mt-1 w-full rounded-md border px-3 py-2 text-sm focus-visible:outline-2"
         />
+        {state.errors?.mensaje && (
+          <p id="mensaje-error" className="text-danger mt-1 text-sm">
+            {state.errors.mensaje}
+          </p>
+        )}
       </div>
 
       <Button type="submit" disabled={isPending}>

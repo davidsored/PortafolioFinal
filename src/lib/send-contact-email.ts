@@ -8,6 +8,7 @@ export interface ContactFormState {
   status: "idle" | "success" | "error";
   message?: string;
   values?: { nombre: string; email: string; mensaje: string };
+  errors?: { nombre?: string; email?: string; mensaje?: string };
 }
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -22,16 +23,30 @@ export async function sendContactEmail(
   const values = { nombre, email, mensaje };
 
   if (!nombre || nombre.length > 100) {
-    return { status: "error", message: "Indica un nombre válido.", values };
-  }
-  if (!email || email.length > 200 || !EMAIL_REGEX.test(email)) {
-    return { status: "error", message: "Indica un email válido.", values };
-  }
-  if (!mensaje || mensaje.length < 10 || mensaje.length > 2000) {
+    const fieldMessage = "Indica un nombre válido (máx. 100 caracteres).";
     return {
       status: "error",
-      message: "El mensaje debe tener entre 10 y 2000 caracteres.",
+      message: fieldMessage,
       values,
+      errors: { nombre: fieldMessage },
+    };
+  }
+  if (!email || email.length > 200 || !EMAIL_REGEX.test(email)) {
+    const fieldMessage = "Indica un email válido (máx. 200 caracteres).";
+    return {
+      status: "error",
+      message: fieldMessage,
+      values,
+      errors: { email: fieldMessage },
+    };
+  }
+  if (!mensaje || mensaje.length < 10 || mensaje.length > 2000) {
+    const fieldMessage = "El mensaje debe tener entre 10 y 2000 caracteres.";
+    return {
+      status: "error",
+      message: fieldMessage,
+      values,
+      errors: { mensaje: fieldMessage },
     };
   }
 
