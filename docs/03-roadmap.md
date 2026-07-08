@@ -42,14 +42,21 @@ Verificado en verde: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm test:e2e`
 
 El sitio ya es publicable a nivel de contenido, aunque falte el pulido de la Fase 3.
 
-## Fase 3 — Pulido de producto
+## Fase 3 — Pulido de producto ✅ completada
 
-- Modo claro/oscuro terminado y pulido (sin flash, transición suave).
-- Animaciones/microinteracciones (scroll reveal, hover de tarjetas, transición de página).
-- Easter eggs discretos (One Piece / Star Wars / Zelda) — opcionales, no intrusivos.
-- Accesibilidad: navegación por teclado completa, contraste AA/AAA, `prefers-reduced-motion`.
-- SEO técnico: metadata por página, sitemap, robots, JSON-LD, Open Graph con imagen propia.
-- Auditoría de rendimiento (Lighthouse ≥ 95).
+- [x] Modo claro/oscuro terminado y pulido: cross-fade de ~200ms en color/fondo/borde al cambiar de tema, sin afectar al indicador de foco (ver nota de a11y abajo).
+- [x] Animaciones/microinteracciones: scroll reveal (`ScrollReveal`/`ScrollRevealItem`), elevación + glow + escala en hover de `ProjectCard`, transición de página (`template.tsx`), micro-pulso del CTA del Hero. Todas respetan `prefers-reduced-motion` de verdad (sin transform, no solo duración reducida).
+- [x] Easter eggs discretos y opt-in: One Piece (click en el footer, guiño real a `OnePieceAPI`), Star Wars (↑↑↓↓), Zelda (triple-click en el logo + sonido vía Web Audio API). Los 3 con carga perezosa (`dynamic(..., { ssr: false })`), ninguno se activa solo.
+- [x] Accesibilidad: auditoría dedicada de lo nuevo en Fase 3 (`accessibility-engineer`), sin bloqueantes. Corregido el hallazgo de bajo riesgo (retraso de 200ms en el anillo de foco por la transición de tema).
+- [x] SEO técnico: `sitemap.ts`/`robots.ts` (Fase 2), JSON-LD `Person` en la Home, `opengraph-image.tsx` propia vía `next/og`.
+- [ ] Auditoría de rendimiento con Lighthouse real (≥ 90/95/95) — **no ejecutada**, no hay Lighthouse/Chrome headless disponible en este entorno. Verificado en su lugar: build limpio, los 3 easter eggs generan chunks separados de ~6KB cada uno (confirmado inspeccionando `.next/static/chunks/`), nada de `motion`/easter eggs se cuela en el bundle compartido. **Pendiente que David ejecute Lighthouse manualmente** (Chrome DevTools, modo incógnito, sobre `pnpm build && pnpm start`) antes de publicar.
+
+**Pendiente de decisión de diseño, no bloqueante (derivado por `accessibility-engineer`, sin forzar la solución):**
+
+- `StarWarsEgg`: el overlay a pantalla completa no oculta el indicador de foco de teclado que queda "por debajo" durante ~2.6s — decidir si se acepta (dura poco) o se fuerza `aria-hidden` total.
+- `template.tsx`: sigue sin haber anuncio de ruta para lectores de pantalla tras una navegación (`aria-live` o mover foco a `<main>`) — ya estaba pendiente antes de Fase 3, no se ha agravado.
+
+El sitio está pulido y listo para la Fase 4 (GitHub y despliegues pendientes).
 
 ## Fase 4 — GitHub y despliegues pendientes
 
