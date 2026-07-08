@@ -72,6 +72,11 @@ body {
  * (`transition-colors`, `transition-shadow`, 150ms) declaran una duración
  * más corta vía clase de Tailwind, que tiene mayor especificidad de cascada
  * en capas de Tailwind v4 y por tanto gana sobre esta regla de base.
+ *
+ * `box-shadow` queda fuera a propósito: varios anillos de foco
+ * (`focus-visible:ring-2`) se implementan con `box-shadow`, y transicionarlo
+ * aquí retrasaba 200ms la aparición del indicador de foco al tabular
+ * (hallazgo de la auditoría de accessibility-engineer en Fase 3).
  */
 @layer base {
   body,
@@ -79,8 +84,7 @@ body {
     transition:
       background-color 200ms ease,
       border-color 200ms ease,
-      color 200ms ease,
-      box-shadow 200ms ease;
+      color 200ms ease;
   }
 }
 
