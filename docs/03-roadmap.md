@@ -58,13 +58,21 @@ El sitio ya es publicable a nivel de contenido, aunque falte el pulido de la Fas
 
 El sitio está pulido y listo para la Fase 4 (GitHub y despliegues pendientes).
 
-## Fase 4 — GitHub y despliegues pendientes
+## Fase 4 — GitHub y despliegues pendientes ✅ completada
 
-- Aplicar la [estrategia de GitHub](./07-mejoras-github.md): README completo en los 3 repos principales + capturas + roadmap de cada proyecto.
-- Resolver el despliegue pendiente de `ProyectoWebCoworking` (es el único de los 3 principales sin demo pública — requiere hosting con MySQL, ver nota abajo).
-- Enlazar cada ficha del portfolio con su demo real (o con el estado "código disponible, demo pendiente" si no se llega a desplegar).
+- [x] Aplicar la [estrategia de GitHub](./07-mejoras-github.md): README reescrito con la plantilla + licencia MIT en `ProyectoWebCoworking`, `TaskPlanner` y `OnePieceAPI` (PRs de higiene mergeados el 08-07-2026), descripción corta y topics en los 5 repos, y re-auditoría final verificada con `gh` CLI documentada en [07-mejoras-github.md](./07-mejoras-github.md) § 1.
+- [x] Perfil de GitHub: repo especial `davidsored/davidsored` creado con README de perfil (posicionamiento, enlace al portfolio, proyectos destacados).
+- [x] Despliegue de `ProyectoWebCoworking`: opciones de hosting evaluadas y comparativa entregada a David — recomendación: Render free (web service) + Aiven MySQL free. La decisión final es de David (ver pendientes abajo); la ficha no queda bloqueada.
+- [x] Enlazar cada ficha del portfolio con su demo real o, en el caso de Coworking Manager, con el estado "código disponible, demo en preparación" — coherente con el badge del README del repo.
+- [x] CI del portfolio operativo y en verde. Nota: el workflow creado en la Fase 1 dejó de pasar al requerir pnpm 11 Node ≥ 22.13 (`node:sqlite`); corregido en esta fase fijando Node 24 en los jobs (commit `65a1133`). La afirmación de la Fase 1 era cierta en su momento — esto es mantenimiento, no un error de aquella fase.
 
-**Nota sobre el despliegue de ProyectoWebCoworking**: es una app ASP.NET Core MVC + MySQL, más pesada de alojar gratis que una SPA o una app Python/Reflex. Opciones a evaluar en su momento (no se decide en esta fase de planificación): Render (Web Service + MySQL gestionado, con free tier limitado y "cold start"), Azure App Service (crédito estudiante si aplica), o contenedorizar con Docker y desplegar en Fly.io. Se documenta como tarea explícita, no como bloqueante para publicar el portfolio: la ficha puede salir con capturas + código + "demo en preparación" y actualizarse después.
+**Pendiente, sin bloquear el cierre de la fase:**
+
+- Despliegue de la demo de Coworking Manager — la decisión de hosting es de David (comparativa ya entregada; recomendación Render free + Aiven MySQL free). Al desplegarla, actualizar ficha del portfolio y README del repo.
+- Saneamiento de secretos de `appsettings.json` de `ProyectoWebCoworking` — David lo pospuso al final de la fase; sigue abierto.
+- Bio y repos fijados (pins) del perfil de GitHub — acción manual de David (no automatizable vía API con permisos estándar).
+- [PR #1 de `TennisTournament`](https://github.com/davidsored/TennisTournament/pull/1) — añade el archivo `LICENSE` (MIT) que el README ya referenciaba con enlace roto; abierto, pendiente de revisión y merge por David.
+- Enlace TennisTournament → portfolio en su README — pospuesto a la Fase 5 (requiere el portfolio publicado).
 
 ## Fase 5 — Lanzamiento
 
