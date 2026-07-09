@@ -20,13 +20,13 @@ export const coworkingManager: Proyecto = {
     "BCrypt",
   ],
   arquitectura:
-    "MVC clásico en capas — Controllers → Services → Repositorios EF Core → MySQL. Autenticación basada en cookies con control de acceso por roles (RBAC): las vistas y acciones de administración están protegidas a nivel de controlador, no solo ocultas en la interfaz.",
+    "MVC monolítico: los controladores concentran el flujo de cada dominio (reservas, recursos, tarifas, usuarios) y acceden a los datos con EF Core sobre MySQL; el envío de correo está aislado tras una interfaz (IEmailService) registrada por inyección de dependencias. Autenticación basada en cookies con control de acceso por roles (RBAC): las vistas y acciones de administración están protegidas a nivel de controlador, no solo ocultas en la interfaz.",
   funcionalidades: [
     "Reservas con validación automática de disponibilidad (evita solapes)",
     "Cálculo dinámico de tarifas según recurso y duración",
     "Panel administrativo con CRUD completo de recursos, tarifas y usuarios",
     "Área de cliente con historial de reservas y gestión de perfil",
-    "Simulación de notificaciones por correo al confirmar una reserva",
+    "Envío real de correos de confirmación de reserva vía SMTP (Gmail), tras la interfaz IEmailService",
   ],
   decisionesTecnicas: [
     "Contraseñas con BCrypt en vez de hashing simple: decisión explícita de seguridad, no un checkbox de curso",
