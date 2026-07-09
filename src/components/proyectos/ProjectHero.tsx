@@ -19,7 +19,20 @@ export function ProjectHero({ proyecto }: { proyecto: Proyecto }) {
         <Button href={proyecto.repoUrl} variant="ghost">
           Ver repositorio
         </Button>
-        {proyecto.demoUrl && <Button href={proyecto.demoUrl}>Ver demo</Button>}
+        {proyecto.demoUrl ? (
+          <Button
+            href={proyecto.demoUrl}
+            aria-label={`Ver demo de ${proyecto.titulo} (se abre en una pestaña nueva)`}
+          >
+            Ver demo
+          </Button>
+        ) : (
+          proyecto.estadoDemo && (
+            <span className="border-border text-fg-muted inline-flex h-11 items-center rounded-md border border-dashed px-6 text-sm font-medium">
+              {proyecto.estadoDemo}
+            </span>
+          )
+        )}
       </div>
 
       {proyecto.imagenPortada && (

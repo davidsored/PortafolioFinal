@@ -12,6 +12,8 @@ export interface Proyecto {
   aprendizajes?: string;
   repoUrl: string;
   demoUrl?: string;
+  /** Texto visible sobre el estado de la demo; solo se muestra si no hay demoUrl. */
+  estadoDemo?: string;
   principal: boolean;
   imagenPortada?: string;
 }
