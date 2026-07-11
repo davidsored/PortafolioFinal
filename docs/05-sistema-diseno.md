@@ -33,6 +33,9 @@ Enfoque _dark-first_ (el modo oscuro es el diseño primario; el claro es una ada
   --color-border: #e2e2e8;
   --color-accent: #0e7490; /* mismo cian, ajustado a contraste AA en claro (5.475:1 sobre #fafafa) */
   --color-accent-2: #7c3aed;
+  --color-success: #15803d; /* ajustado a contraste AA en claro (4.81:1 sobre #fafafa) */
+  --color-warning: #a16207; /* ajustado a contraste AA en claro (4.72:1 sobre #fafafa) */
+  --color-danger: #dc2626; /* ajustado a contraste AA en claro (4.63:1 sobre #fafafa) */
 }
 ```
 

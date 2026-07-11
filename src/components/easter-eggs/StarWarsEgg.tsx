@@ -62,8 +62,11 @@ export function StarWarsEgg() {
           exit={{ opacity: 0 }}
           transition={{ duration: shouldReduceMotion ? 0.01 : 0.3, ease: EASE_OUT }}
         >
+          {/* Colores literales (los valores del tema oscuro), no tokens: el
+              overlay es siempre bg-black/70 y en tema claro los tokens
+              resolvían a colores oscuros ilegibles sobre él (1.2-1.6:1). */}
           <motion.p
-            className="font-display text-accent px-6 text-center text-xl font-semibold tracking-wide sm:text-3xl"
+            className="font-display px-6 text-center text-xl font-semibold tracking-wide text-[#6ee7ff] sm:text-3xl"
             initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.96 }}
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -12 }}
@@ -71,7 +74,7 @@ export function StarWarsEgg() {
           >
             Hace mucho tiempo, en un stack muy, muy lejano&hellip;
             <br />
-            <span className="text-fg-muted text-sm font-normal sm:text-base">
+            <span className="text-sm font-normal text-[#e8e8f0] sm:text-base">
               (este portfolio se compiló sin usar la Fuerza — solo Next.js)
             </span>
           </motion.p>
