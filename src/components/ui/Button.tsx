@@ -32,8 +32,11 @@ export function Button(props: LinkButtonProps | NativeButtonProps) {
   if (typeof rest.href === "string") {
     const { href, ...anchorProps } = rest as LinkButtonProps;
     const isExternal = href.startsWith("http") || href.startsWith("mailto:");
+    // Un archivo estático de public/ (p. ej. el PDF del CV) no es una ruta de
+    // la app: si pasara por next/link, Next lo prefetchearía como payload RSC.
+    const isStaticFile = /\.[a-z\d]+$/i.test(href);
 
-    if (isExternal) {
+    if (isExternal || isStaticFile) {
       return (
         <a
           href={href}
