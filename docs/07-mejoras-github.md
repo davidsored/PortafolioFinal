@@ -23,7 +23,7 @@
 - ✅ Añadir licencia MIT — hecho.
 - ✅ Añadir sección "Roadmap" — hecho.
 - ⏳ Resolver demo (ver [03-roadmap.md](./03-roadmap.md) Fase 4) y enlazarla en la cabecera del README — **pendiente**: la decisión de hosting con MySQL sigue abierta; el README ya lo señaliza con un badge "demo en preparación".
-- ⏳ Saneamiento de secretos del historial/configuración — **pendiente**: David lo pospuso al final de la fase; sigue abierto al cierre de la Fase 4.
+- ✅ Saneamiento de secretos del historial/configuración — **resuelto (14-07-2026)**: David rotó las credenciales expuestas (app password de Gmail revocada, contraseña de MySQL cambiada) y el [PR #2](https://github.com/davidsored/ProyectoWebCoworking/pull/2) mergeado saneó `appsettings.json` y el `DbContext`; los valores del historial quedaron revocados.
 
 ### `TennisTournament` (ya es el más fuerte — usar como referencia interna)
 

@@ -69,7 +69,7 @@ El sitio está pulido y listo para la Fase 4 (GitHub y despliegues pendientes).
 **Pendiente, sin bloquear el cierre de la fase:**
 
 - Despliegue de la demo de Coworking Manager — la decisión de hosting es de David (comparativa ya entregada; recomendación Render free + Aiven MySQL free). Al desplegarla, actualizar ficha del portfolio y README del repo.
-- Saneamiento de secretos de `appsettings.json` de `ProyectoWebCoworking` — David lo pospuso al final de la fase; sigue abierto.
+- ✅ Saneamiento de secretos de `appsettings.json` de `ProyectoWebCoworking` — **resuelto el 14-07-2026**: David rotó las credenciales expuestas (app password de Gmail revocada, contraseña de MySQL cambiada) y el [PR #2](https://github.com/davidsored/ProyectoWebCoworking/pull/2) mergeado saneó `appsettings.json` y el `DbContext`; los valores que quedan en el historial de git están revocados y ya no dan acceso a nada.
 - Bio y repos fijados (pins) del perfil de GitHub — acción manual de David (no automatizable vía API con permisos estándar).
 - [PR #1 de `TennisTournament`](https://github.com/davidsored/TennisTournament/pull/1) — añade el archivo `LICENSE` (MIT) que el README ya referenciaba con enlace roto; abierto, pendiente de revisión y merge por David.
 - Enlace TennisTournament → portfolio en su README — pospuesto a la Fase 5 (requiere el portfolio publicado).
