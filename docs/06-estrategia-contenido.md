@@ -9,12 +9,15 @@ Todos los textos están en español, escritos para reclutadores técnicos de emp
 ### Hero
 
 **Titular:**
+
 > Construyo aplicaciones web que funcionan de verdad.
 
 **Subtitular (usa el título oficial de David):**
+
 > Desarrollador Backend especializado en la creación de aplicaciones web de alto rendimiento con C#, ASP.NET Core y Blazor WebAssembly. Ampliando ahora hacia Python e integración de IA.
 
 **CTAs:**
+
 - Primario: `Ver proyectos` → `/proyectos`
 - Secundario: `Descargar CV` → `/cv/david-suarez-otero-cv.pdf`
 
@@ -54,13 +57,13 @@ Todos los textos están en español, escritos para reclutadores técnicos de emp
 - **Problema que resuelve:** Los espacios de coworking pequeños/medianos gestionan reservas y disponibilidad con hojas de cálculo o WhatsApp, lo que genera solapes, errores de tarifa y cero trazabilidad. Coworking Manager centraliza reservas, disponibilidad y facturación en un único sistema con roles diferenciados.
 - **Descripción completa:** Aplicación web MVC construida como proyecto final de ciclo (Desarrollo de Aplicaciones Web), pensada para uso real: un cliente puede reservar una sala o puesto viendo disponibilidad en tiempo real, con cálculo automático de tarifa según duración y tipo de recurso; un administrador gestiona el catálogo de recursos, usuarios y tarifas desde un panel con operaciones CRUD completas.
 - **Tecnologías:** ASP.NET Core 8 (MVC), Entity Framework Core (Code First y Database First), MySQL, Bootstrap 5 (tema Zephyr), jQuery, BCrypt.
-- **Arquitectura:** MVC clásico en capas — Controllers → Services → Repositorios EF Core → MySQL. Autenticación basada en cookies con control de acceso por roles (RBAC): las vistas y acciones de administración están protegidas a nivel de controlador, no solo ocultas en la interfaz.
+- **Arquitectura:** MVC monolítico: los controladores concentran el flujo de cada dominio (reservas, recursos, tarifas, usuarios) y acceden a los datos con EF Core sobre MySQL; el envío de correo está aislado tras una interfaz (`IEmailService`) registrada por inyección de dependencias. Autenticación basada en cookies con control de acceso por roles (RBAC): las vistas y acciones de administración están protegidas a nivel de controlador, no solo ocultas en la interfaz.
 - **Funcionalidades principales:**
   - Reservas con validación automática de disponibilidad (evita solapes).
   - Cálculo dinámico de tarifas según recurso y duración.
   - Panel administrativo con CRUD completo de recursos, tarifas y usuarios.
   - Área de cliente con historial de reservas y gestión de perfil.
-  - Simulación de notificaciones por correo al confirmar una reserva.
+  - Envío real de correos de confirmación de reserva vía SMTP (Gmail), tras la interfaz `IEmailService`.
 - **Decisiones técnicas relevantes:**
   - Contraseñas con BCrypt en vez de hashing simple: decisión explícita de seguridad, no un checkbox de curso.
   - Soporte de EF Core en dos modos (Code First / Database First) para poder partir de un esquema MySQL ya existente en entornos reales, no solo generar la base desde cero.
@@ -138,18 +141,23 @@ Todos los textos están en español, escritos para reclutadores técnicos de emp
 Objetivo: que no se lea como una lista de logos, sino como evidencia de para qué ha servido cada tecnología.
 
 ### Backend
+
 > **C#, .NET, ASP.NET Core, Blazor WebAssembly.** Es mi base y donde tengo más horas de vuelo: APIs REST con capas bien separadas (`OnePieceAPI`), autenticación y control de acceso por roles sobre MySQL (`Coworking Manager`), y una SPA completa sobre Blazor con lógica de calendario no trivial (`TaskPlanner`).
 
 ### En expansión
+
 > **Python.** Elegido para el proyecto más exigente técnicamente del portfolio (`CourtManager`): 165 tests, integración continua y despliegue en producción. No es una línea suelta en el CV, es donde más estoy invirtiendo ahora mismo, con vistas a moverme hacia un perfil fullstack + IA.
 
 ### Frontend
+
 > **React, TypeScript, HTML, CSS, JavaScript.** Aplicados en `PokedexIA`: componentes reutilizables, generación estática, tipado fuerte en toda la capa de datos consumidos de una API externa. Este mismo portfolio está construido con este stack.
 
 ### Bases de datos
+
 > **MySQL, SQL Server, PostgreSQL, SQLite.** He trabajado tanto con esquemas relacionales clásicos (Coworking Manager sobre MySQL) como con ORMs modernos tipados (SQLModel sobre PostgreSQL en CourtManager), incluyendo migraciones versionadas con Alembic.
 
 ### Herramientas y forma de trabajar
+
 > **Git, GitHub, Docker (en aprendizaje), CI/CD con GitHub Actions, herramientas de IA para desarrollo.** Uso Docker para reproducibilidad de entornos (CourtManager) y GitHub Actions para no depender de "en mi máquina funciona". Utilizo asistentes de IA de forma habitual para acelerar tareas mecánicas y explorar alternativas, siempre con revisión propia antes de integrar nada.
 
 ---
@@ -164,8 +172,8 @@ Objetivo: que no se lea como una lista de logos, sino como evidencia de para qu�
 
 ## 7. Metadatos SEO por página (orientativos, se refinan en Fase 3)
 
-| Página | `title` | `description` |
-|---|---|---|
-| Home | David Suárez-Otero Redondo — Desarrollador Backend & Fullstack Junior | Desarrollador backend junior especializado en C#, ASP.NET Core y Blazor, ampliando hacia Python e IA. Proyectos reales, no tutoriales. |
-| Proyectos | Proyectos — David Suárez-Otero Redondo | Coworking Manager, CourtManager y PokedexIA: tres aplicaciones completas con tests, CI/CD y despliegue real. |
-| Sobre mí | Sobre mí — David Suárez-Otero Redondo | Cómo trabajo, qué domino y hacia dónde voy: de .NET a Python e integración de IA en aplicaciones reales. |
+| Página    | `title`                                                               | `description`                                                                                                                          |
+| --------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Home      | David Suárez-Otero Redondo — Desarrollador Backend & Fullstack Junior | Desarrollador backend junior especializado en C#, ASP.NET Core y Blazor, ampliando hacia Python e IA. Proyectos reales, no tutoriales. |
+| Proyectos | Proyectos — David Suárez-Otero Redondo                                | Coworking Manager, CourtManager y PokedexIA: tres aplicaciones completas con tests, CI/CD y despliegue real.                           |
+| Sobre mí  | Sobre mí — David Suárez-Otero Redondo                                 | Cómo trabajo, qué domino y hacia dónde voy: de .NET a Python e integración de IA en aplicaciones reales.                               |

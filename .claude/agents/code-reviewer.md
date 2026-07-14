@@ -34,7 +34,7 @@ Que ningún cambio no trivial llegue a `main` sin haber pasado por un filtro de 
 
 ## Relación con otros agentes
 
-Es el **último paso** antes de que el Orchestrator dé un cambio por cerrado — revisa el resultado combinado de Frontend Architect, UI Designer, Design Engineer, Content Writer, Testing Engineer, Accessibility Engineer y Performance Engineer. Si encuentra un hallazgo, lo devuelve al agente responsable del dominio afectado (no lo corrige él mismo).
+Es el **último paso** antes de que el Orchestrator dé un cambio por cerrado — revisa el resultado combinado de Staff Engineer (si intervino), Frontend Architect, UI Designer, Design Engineer, Content Writer, Testing Engineer, Accessibility Engineer y Performance Engineer. Si encuentra un hallazgo, lo devuelve al agente responsable del dominio afectado (no lo corrige él mismo). `staff-engineer` puede solicitarle una revisión adicional fuera del flujo estándar si detecta un riesgo técnico que su propio checklist arquitectónico no cubre.
 
 ## Skills utilizadas
 

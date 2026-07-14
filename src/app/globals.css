@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #0a0a0f;
+  --color-bg-elevated: #12121a;
+  --color-fg: #e8e8f0;
+  --color-fg-muted: #9a9aad;
+  --color-border: #23232f;
+  --color-accent: #6ee7ff;
+  --color-accent-2: #b48cff;
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-danger: #f87171;
+}
+
+[data-theme="light"] {
+  --color-bg: #fafafa;
+  --color-bg-elevated: #ffffff;
+  --color-fg: #14141c;
+  --color-fg-muted: #55555f;
+  --color-border: #e2e2e8;
+  --color-accent: #0e7490;
+  --color-accent-2: #7c3aed;
+  --color-success: #15803d;
+  --color-warning: #a16207;
+  --color-danger: #dc2626;
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-bg-elevated: var(--color-bg-elevated);
+  --color-fg: var(--color-fg);
+  --color-fg-muted: var(--color-fg-muted);
+  --color-border: var(--color-border);
+  --color-accent: var(--color-accent);
+  --color-accent-2: var(--color-accent-2);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.5rem;
+  --text-4xl: 3.5rem;
+  --text-5xl: 4.5rem;
+
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+}
+
+.glow-accent {
+  box-shadow: 0 0 24px -8px var(--color-accent);
+}
+
+/*
+ * Cross-fade de tema (~200ms): transiciona background/border/color en todo
+ * el árbol al cambiar entre claro y oscuro, para evitar un "flash" al
+ * cambiar `data-theme`. Los componentes con su propia transición de hover
+ * (`transition-colors`, `transition-shadow`, 150ms) declaran una duración
+ * más corta vía clase de Tailwind, que tiene mayor especificidad de cascada
+ * en capas de Tailwind v4 y por tanto gana sobre esta regla de base.
+ *
+ * `box-shadow` queda fuera a propósito: varios anillos de foco
+ * (`focus-visible:ring-2`) se implementan con `box-shadow`, y transicionarlo
+ * aquí retrasaba 200ms la aparición del indicador de foco al tabular
+ * (hallazgo de la auditoría de accessibility-engineer en Fase 3).
+ */
+@layer base {
+  body,
+  body * {
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease;
+  }
+}
+
+/*
+ * Fade de entrada entre páginas (usado por `src/app/template.tsx`). Vive en
+ * CSS y no en motion/react a propósito: importar motion en el entry cliente
+ * raíz lo duplicaba en dos grafos de Turbopack (~88 KB gz extra en todas las
+ * páginas, Fase 5) — ver docs/02-arquitectura.md §6. El easing es el EASE_OUT
+ * de lib/motion-variants.ts, para que el fade sea idéntico al que daba motion.
+ * Envuelto en `no-preference`: bajo prefers-reduced-motion no hay animación.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes page-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .page-fade {
+    animation: page-fade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

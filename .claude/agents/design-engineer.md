@@ -40,9 +40,9 @@ Recibe de **UI Designer** el resultado visual final y sus notas sobre qué merec
 
 ## Skills utilizadas
 
-- **Emil Design Engineering Skill** — para calidad de motion, timing, easing y detalles de microinteracción a nivel de referencia de producto.
+- **Emil Design Engineering Skill** (`emilkowalski/skills@emil-design-eng`) — para calidad de motion, timing, easing y detalles de microinteracción a nivel de referencia de producto.
 
-> **Estado actual:** esta skill no está instalada todavía (instalación aparcada, ver `docs/01-plan-general.md` § 6 y `AGENTS.md` § Uso de skills). Mientras tanto, este agente sigue los valores concretos ya documentados en `docs/05-sistema-diseno.md` § 5 (duraciones, tipo de easing, qué anima cada interacción) como sustituto manual. En cuanto se instale, debe cargarse siempre que se invoque este agente.
+> **Estado actual:** instalada en `.claude/skills/emil-design-eng/` (ver `.claude/skills/README.md`). Cárgala siempre que trabajes en este rol; los valores de `docs/05-sistema-diseno.md` § 5 siguen siendo la base del proyecto, la skill afina el cómo (curvas de easing, timing) sobre esa base.
 
 ## Entradas
 

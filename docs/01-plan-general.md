@@ -4,7 +4,7 @@
 
 Conseguir el primer empleo como **Backend / Fullstack Developer** (con proyección a **AI Engineer junior**) mediante un portfolio que demuestre, con hechos y no con adjetivos, que David puede incorporarse a un equipo profesional ya.
 
-El portfolio es una herramienta de conversión para reclutadores técnicos, no una galería de código. Cada sección debe responder, en menos de 10 segundos de scroll, a la pregunta: *"¿esta persona puede resolver problemas reales con buenas prácticas?"*
+El portfolio es una herramienta de conversión para reclutadores técnicos, no una galería de código. Cada sección debe responder, en menos de 10 segundos de scroll, a la pregunta: _"¿esta persona puede resolver problemas reales con buenas prácticas?"_
 
 ## 2. Prioridades (en este orden, sin excepción)
 
@@ -25,25 +25,25 @@ Esta frase es el filtro de diseño y contenido: si un elemento visual o un párr
 ## 4. Quién es David (para calibrar tono y contenido)
 
 - Perfil **junior real**, recién salido de ciclo/formación en Desarrollo de Aplicaciones Web, no autodidacta sin proyectos ni bootcamper de 3 meses.
-- Ya tiene **3 proyectos completos y funcionales**, uno de ellos (`TennisTournament` / *CourtManager*) con nivel claramente superior al de un portfolio junior medio: 165 tests automatizados, CI/CD con GitHub Actions, Docker, despliegue real en Render.
+- Ya tiene **3 proyectos completos y funcionales**, uno de ellos (`TennisTournament` / _CourtManager_) con nivel claramente superior al de un portfolio junior medio: 165 tests automatizados, CI/CD con GitHub Actions, Docker, despliegue real en Render.
 - Está migrando su foco de C#/.NET hacia un perfil más **fullstack + Python + IA**, y eso ya se refleta en el propio código (CourtManager está en Python/Reflex, no en C#).
 - Dos proyectos secundarios adicionales encontrados en su GitHub que no estaban en el brief inicial y que conviene aprovechar:
   - **TaskPlanner**: SPA de gestión de tareas en Blazor WebAssembly + ASP.NET Core (refuerza el perfil .NET/Blazor del CV).
-  - **OnePieceAPI**: API REST en ASP.NET Core que consume una API externa de One Piece y traduce el modelo a español — encaja perfecto como vehículo *legítimo* para el easter egg de One Piece (no es un gadget decorativo, es código real).
+  - **OnePieceAPI**: API REST en ASP.NET Core que consume una API externa de One Piece y traduce el modelo a español — encaja perfecto como vehículo _legítimo_ para el easter egg de One Piece (no es un gadget decorativo, es código real).
 
 ## 5. Decisiones ya cerradas (no se vuelven a discutir)
 
-| Ámbito | Decisión |
-|---|---|
-| Idioma | Español único, sin i18n |
-| Frontend | React + TypeScript |
-| CMS | Ninguno — contenido en archivos TS tipados dentro del propio repo |
-| Backend propio | Ninguno salvo justificación puntual (ver [02-arquitectura.md](./02-arquitectura.md) para el caso del formulario de contacto) |
-| Deploy | Vercel |
-| Blog | No en v1, arquitectura preparada para añadirlo |
-| Sección "Experimentos IA" | No en v1, arquitectura preparada para añadirla sin refactor |
-| Foto personal | No se incluye |
-| Modo claro/oscuro | Obligatorio desde v1 |
+| Ámbito                    | Decisión                                                                                                                     |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Idioma                    | Español único, sin i18n                                                                                                      |
+| Frontend                  | React + TypeScript                                                                                                           |
+| CMS                       | Ninguno — contenido en archivos TS tipados dentro del propio repo                                                            |
+| Backend propio            | Ninguno salvo justificación puntual (ver [02-arquitectura.md](./02-arquitectura.md) para el caso del formulario de contacto) |
+| Deploy                    | Vercel                                                                                                                       |
+| Blog                      | No en v1, arquitectura preparada para añadirlo                                                                               |
+| Sección "Experimentos IA" | No en v1, arquitectura preparada para añadirla sin refactor                                                                  |
+| Foto personal             | No se incluye                                                                                                                |
+| Modo claro/oscuro         | Obligatorio desde v1                                                                                                         |
 
 ## 6. Hallazgo importante a gestionar: "PokedexIA"
 
@@ -52,11 +52,11 @@ El repo `PokedexIA` **no contiene ninguna funcionalidad de IA** — es un catál
 **Decisión de David:** aparcar por ahora la idea de añadirle una función de IA real (se diseñará con calma en otra sesión, no se improvisa). Mientras tanto:
 
 - El copy del portfolio para PokedexIA es **honesto**: se vende por lo que es (Next.js 16, React 19, TypeScript, generación estática, UI retro 8-bit muy cuidada), sin mencionar IA.
-- Se deja constancia aquí (no en el copy público) de que existe una tarea futura: *definir qué función de IA tiene sentido en PokedexIA antes de que el nombre choque con el contenido*. Candidatos a evaluar en esa sesión futura: comparador de Pokémon con recomendación por LLM, chat de "Pokédex parlante", clasificador de equipo. No se decide nada de esto ahora.
+- Se deja constancia aquí (no en el copy público) de que existe una tarea futura: _definir qué función de IA tiene sentido en PokedexIA antes de que el nombre choque con el contenido_. Candidatos a evaluar en esa sesión futura: comparador de Pokémon con recomendación por LLM, chat de "Pokédex parlante", clasificador de equipo. No se decide nada de esto ahora.
 
 ## 7. Qué NO hace esta fase
 
-Esta ronda de trabajo entrega **documentos de planificación y contenido**, no código de producción. El scaffolding real de la app (`npm create vite/next`, componentes, tests) es la fase siguiente y se hace después de que David revise y apruebe:
+Esta ronda de trabajo entrega **documentos de planificación y contenido**, no código de producción. El scaffolding real de la app (`pnpm create next-app`, componentes, tests) es la fase siguiente y se hace después de que David revise y apruebe:
 
 - La arquitectura recomendada (incluye una desviación razonada del brief: Next.js en vez de una SPA React "pura" — ver [02-arquitectura.md](./02-arquitectura.md)).
 - El sistema de diseño inicial.

@@ -9,7 +9,7 @@
 
 ## 2. Paleta de color (tokens CSS variables)
 
-Enfoque *dark-first* (el modo oscuro es el diseño primario; el claro es una adaptación cuidada, no un negativo automático).
+Enfoque _dark-first_ (el modo oscuro es el diseño primario; el claro es una adaptación cuidada, no un negativo automático).
 
 ```css
 :root {
@@ -19,8 +19,8 @@ Enfoque *dark-first* (el modo oscuro es el diseño primario; el claro es una ada
   --color-fg: #e8e8f0;
   --color-fg-muted: #9a9aad;
   --color-border: #23232f;
-  --color-accent: #6ee7ff;      /* cian eléctrico — el "futurista" */
-  --color-accent-2: #b48cff;    /* violeta — soporte, gradientes */
+  --color-accent: #6ee7ff; /* cian eléctrico — el "futurista" */
+  --color-accent-2: #b48cff; /* violeta — soporte, gradientes */
   --color-success: #4ade80;
   --color-warning: #fbbf24;
 }
@@ -31,8 +31,11 @@ Enfoque *dark-first* (el modo oscuro es el diseño primario; el claro es una ada
   --color-fg: #14141c;
   --color-fg-muted: #55555f;
   --color-border: #e2e2e8;
-  --color-accent: #0891b2;      /* mismo cian, ajustado a contraste AA en claro */
+  --color-accent: #0e7490; /* mismo cian, ajustado a contraste AA en claro (5.475:1 sobre #fafafa) */
   --color-accent-2: #7c3aed;
+  --color-success: #15803d; /* ajustado a contraste AA en claro (4.81:1 sobre #fafafa) */
+  --color-warning: #a16207; /* ajustado a contraste AA en claro (4.72:1 sobre #fafafa) */
+  --color-danger: #dc2626; /* ajustado a contraste AA en claro (4.63:1 sobre #fafafa) */
 }
 ```
 
@@ -56,13 +59,13 @@ Escala tipográfica (rem, base 16px): `0.75 / 0.875 / 1 / 1.25 / 1.5 / 2 / 2.5 /
 
 Librería: **Motion** (`motion/react`).
 
-| Interacción | Comportamiento |
-|---|---|
-| Entrada de secciones al hacer scroll | Fade + translateY(12px), stagger corto entre hijos, una sola vez |
-| Hover en `ProjectCard` | Elevación sutil + glow de borde + escala de imagen 1.02, 150ms |
-| Cambio de tema | Cross-fade de color, no un "flash", ~200ms |
-| Navegación entre páginas | Fade simple, sin efectos de página completa (evita sensación "genérica de plantilla") |
-| CTA principal del Hero | Micro-pulso muy sutil en el glow, nunca parpadeante ni agresivo |
+| Interacción                          | Comportamiento                                                                        |
+| ------------------------------------ | ------------------------------------------------------------------------------------- |
+| Entrada de secciones al hacer scroll | Fade + translateY(12px), stagger corto entre hijos, una sola vez                      |
+| Hover en `ProjectCard`               | Elevación sutil + glow de borde + escala de imagen 1.02, 150ms                        |
+| Cambio de tema                       | Cross-fade de color, no un "flash", ~200ms                                            |
+| Navegación entre páginas             | Fade simple, sin efectos de página completa (evita sensación "genérica de plantilla") |
+| CTA principal del Hero               | Micro-pulso muy sutil en el glow, nunca parpadeante ni agresivo                       |
 
 Toda animación respeta `prefers-reduced-motion: reduce` desactivando transformaciones y dejando solo cambios de opacidad instantáneos.
 
@@ -74,11 +77,11 @@ Toda animación respeta `prefers-reduced-motion: reduce` desactivando transforma
 
 Regla de oro: **opt-in, discretos, no rompen el flujo profesional**. Nadie debe encontrárselos por accidente en su primer vistazo.
 
-| Easter egg | Disparador | Comportamiento |
-|---|---|---|
-| One Piece | Icono discreto (un pequeño timón/sombrero de paja) en el footer, o hover prolongado sobre el logo | Pequeña animación/tooltip con guiño (p. ej. referencia a `OnePieceAPI`, uno de los proyectos secundarios reales) |
-| Star Wars | Combinación de teclas tipo Konami (↑↑↓↓ o similar) en cualquier página | Efecto visual breve (sables de luz cruzando el cursor, o un mensaje tipo "crawl" del inicio de las películas), 2-3s y desaparece |
-| Zelda | Click específico repetido sobre un elemento decorativo (p. ej. 3 clics en el favicon/logo) | Sonido/animación muy corta tipo "¡ta-ding!" de descubrimiento de objeto, silenciado por defecto (requiere interacción explícita para audio) |
+| Easter egg | Disparador                                                                                        | Comportamiento                                                                                                                              |
+| ---------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| One Piece  | Icono discreto (un pequeño timón/sombrero de paja) en el footer, o hover prolongado sobre el logo | Pequeña animación/tooltip con guiño (p. ej. referencia a `OnePieceAPI`, uno de los proyectos secundarios reales)                            |
+| Star Wars  | Combinación de teclas tipo Konami (↑↑↓↓ o similar) en cualquier página                            | Efecto visual breve (sables de luz cruzando el cursor, o un mensaje tipo "crawl" del inicio de las películas), 2-3s y desaparece            |
+| Zelda      | Click específico repetido sobre un elemento decorativo (p. ej. 3 clics en el favicon/logo)        | Sonido/animación muy corta tipo "¡ta-ding!" de descubrimiento de objeto, silenciado por defecto (requiere interacción explícita para audio) |
 
 Todos se implementan con carga perezosa (ver [04-estructura-carpetas.md](./04-estructura-carpetas.md)) para que su coste en bundle/rendimiento sea cero si no se activan, y ninguno se ejecuta automáticamente al cargar la página.
 

@@ -18,6 +18,17 @@ Contexto crítico que cualquier agente debe conocer antes de tocar código:
 - Cualquier nuevo proyecto para el portfolio (principal o secundario) se añade como un archivo nuevo en `content/proyectos/` que cumple la interfaz `Proyecto` — no se toca ningún componente para añadir un proyecto.
 - Antes de añadir una dependencia nueva, comprobar si ya existe una forma de resolverlo con lo que hay (Next.js, Tailwind, Motion, React). Este proyecto prioriza pocas dependencias bien entendidas sobre muchas dependencias "por si acaso".
 
+## Gestión de dependencias
+
+**pnpm es el único gestor de paquetes permitido en este proyecto.** Regla permanente, salvo instrucción explícita de David en contra.
+
+- Nunca usar `npm`. Nunca usar `yarn`. Nunca usar `bun`, salvo que se apruebe explícitamente en el futuro.
+- Instalar dependencias con `pnpm add <paquete>` (`pnpm add -D <paquete>` para dev), nunca con `npm install`.
+- Ejecutar scripts con `pnpm <script>` (p. ej. `pnpm dev`, `pnpm build`, `pnpm lint`), nunca con `npm run <script>`.
+- `pnpm-lock.yaml` es el único lockfile del proyecto: forma parte del repositorio y nunca se elimina ni se sustituye por `package-lock.json`/`yarn.lock`/`bun.lock`.
+- Ningún ejemplo, comando, script o fragmento de documentación generado por un agente debe usar `npm`. Si un agente genera accidentalmente un comando con `npm`, debe corregirlo a `pnpm` antes de dar la tarea por terminada.
+- Todos los agentes de `.claude/agents/` asumen `pnpm` al proponer o ejecutar comandos de instalación/build/test.
+
 ## Código
 
 - TypeScript en modo estricto (`strict: true`). No usar `any` salvo justificación en comentario inline explicando por qué no hay alternativa tipada razonable.
@@ -27,7 +38,7 @@ Contexto crítico que cualquier agente debe conocer antes de tocar código:
 - SOLID aplicado con sentido común de proyecto pequeño:
   - **S**: un componente = una responsabilidad visual; la lógica de negocio (si la hay, p. ej. cálculo de tema) vive en `lib/`, no mezclada en el JSX.
   - **O/L/I/D**: relevantes sobre todo en `lib/` y `content/types.ts` — las interfaces de contenido (`Proyecto`, `StackItem`) deben permitir añadir un proyecto o tecnología nueva sin modificar el código que los consume.
-- Comentarios: por defecto, ninguno. Solo cuando el *por qué* no es obvio (p. ej. por qué `images.unoptimized` está activo, por qué un easter egg usa carga perezosa). Nunca comentarios que expliquen *qué* hace el código.
+- Comentarios: por defecto, ninguno. Solo cuando el _por qué_ no es obvio (p. ej. por qué `images.unoptimized` está activo, por qué un easter egg usa carga perezosa). Nunca comentarios que expliquen _qué_ hace el código.
 - No dejar código muerto, imports sin usar, ni features a medias. Si algo no se termina en la sesión actual, no se mezcla con código que sí funciona.
 
 ## Testing
@@ -38,12 +49,12 @@ Criterio de qué probar (ver también [`docs/02-arquitectura.md`](./docs/02-arqu
 - **No se prueba**: JSX puramente de presentación sin lógica (un `Card` que solo recibe props y las pinta).
 - Unitario/componente: Vitest + React Testing Library. E2E smoke: Playwright, cubriendo como mínimo Home → ficha de proyecto y el envío del formulario de contacto.
 - Cuándo crear un test nuevo: al añadir cualquier función en `lib/` con una rama condicional, o cualquier componente que reaccione a interacción del usuario.
-- Validación de cambios antes de dar por cerrada una tarea: `npm run lint && npm run typecheck && npm run test` en verde, y verificación visual manual (modo claro y oscuro) del área tocada. Para cambios de UI, usar el flujo de la skill `/run` o un preview local antes de reportar como terminado.
+- Validación de cambios antes de dar por cerrada una tarea: `pnpm lint && pnpm typecheck && pnpm test` en verde, y verificación visual manual (modo claro y oscuro) del área tocada. Para cambios de UI, usar el flujo de la skill `/run` o un preview local antes de reportar como terminado.
 
 ## UI/UX
 
 - Seguir los tokens de [`docs/05-sistema-diseno.md`](./docs/05-sistema-diseno.md) (color, tipografía, espaciado, radios) en vez de introducir valores sueltos. Si Tailwind no cubre un token, se añade a `tailwind.config.ts`, no se hardcodea en el componente.
-- Toda animación pasa por `motion/react` y respeta `prefers-reduced-motion`. No usar `setTimeout`/CSS animations sueltas para microinteracciones nuevas sin pasar por el mismo sistema.
+- Toda animación pasa por `motion/react` y respeta `prefers-reduced-motion` (excepción documentada: transición de página en `template.tsx`, ver `docs/02-arquitectura.md`). No usar `setTimeout`/CSS animations sueltas para microinteracciones nuevas sin pasar por el mismo sistema.
 - Modo claro y oscuro se verifican juntos siempre — no se acepta un cambio de UI probado solo en un tema.
 - Responsive: mobile-first, breakpoints de Tailwind por defecto. Cualquier componente nuevo se revisa como mínimo en 375px y 1280px antes de darlo por terminado.
 - Accesibilidad no es una fase aparte: cualquier elemento interactivo lleva `aria-label`/rol correcto en el mismo commit en que se crea, no en un PR de "limpieza" posterior.
@@ -65,44 +76,48 @@ Criterio de qué probar (ver también [`docs/02-arquitectura.md`](./docs/02-arqu
 
 ## Uso de skills
 
-**Estado actual:** estas 5 skills no están instaladas en el entorno de desarrollo. David decidió aparcar su instalación por ahora (no es bloqueante, ver `docs/01-plan-general.md` § 6). Antes de invocar cualquiera de ellas, comprobar si ya aparece en la lista de skills disponibles de la sesión; si no aparece, aplicar el criterio ya documentado en `docs/05-sistema-diseno.md` de forma manual en su lugar. La tabla siguiente sigue siendo válida para cuando se instalen.
+**Estado actual:** las 5 skills están **instaladas** en `.claude/skills/` vía la Skills CLI (`npx skills`, ver `.claude/skills/README.md` y `skills-lock.json`), escopadas solo a Claude Code. Cárgalas siempre que el agente dueño entre en juego.
 
-| Skill | Cuándo usarla |
-|---|---|
-| **Emil Design Engineering** | Al construir o pulir cualquier componente visual: motion, detalles de interfaz, microinteracciones, sensación "premium" del sistema de diseño. |
-| **Impeccable Style** | Al revisar una pantalla/componente terminado para detectar si "se ve genérico" antes de darlo por bueno — pasada de refinamiento, no de creación inicial. |
-| **Taste** | Al tomar decisiones de identidad visual (paleta, tipografía, easter eggs) para asegurar que el resultado tiene personalidad propia y no es una plantilla más. |
-| **UI UX Pro Max** | Al diseñar flujos nuevos (navegación, formulario, sistema de componentes) y al revisar accesibilidad/patrones de UX antes de publicarlos. |
-| **Find Skills** | Cuando se necesite una capacidad no cubierta por las anteriores (p. ej. optimización de imágenes, auditoría SEO específica) antes de resolverlo "a mano" desde cero. |
+| Skill                       | Paquete instalado                                    | Cuándo usarla                                                                                                                                                 |
+| --------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Emil Design Engineering** | `emilkowalski/skills@emil-design-eng`                | Al construir o pulir cualquier componente visual: motion, detalles de interfaz, microinteracciones, sensación "premium" del sistema de diseño.                |
+| **Impeccable Style**        | `pbakaus/impeccable@impeccable`                      | Al revisar una pantalla/componente terminado para detectar si "se ve genérico" antes de darlo por bueno — pasada de refinamiento, no de creación inicial.     |
+| **Taste**                   | `leonxlnx/taste-skill@design-taste-frontend`         | Al tomar decisiones de identidad visual (paleta, tipografía, easter eggs) para asegurar que el resultado tiene personalidad propia y no es una plantilla más. |
+| **UI UX Pro Max**           | `nextlevelbuilder/ui-ux-pro-max-skill@ui-ux-pro-max` | Al diseñar flujos nuevos (navegación, formulario, sistema de componentes) y al revisar accesibilidad/patrones de UX antes de publicarlos.                     |
+| **Find Skills**             | `vercel-labs/skills@find-skills`                     | Cuando se necesite una capacidad no cubierta por las anteriores antes de resolverlo "a mano" desde cero.                                                      |
 
 ## Sistema Multiagente
 
-El desarrollo de este portfolio está guiado por un **Orchestrator** y 9 subagentes especializados definidos en [`.claude/agents/`](.claude/agents/), cada uno con una responsabilidad única (SRP). El detalle completo — diagrama, ejemplos de delegación, cómo añadir agentes nuevos y cómo mantener el sistema — está en [`docs/09-workflow-agentes.md`](docs/09-workflow-agentes.md). Esta sección es el resumen operativo.
+El desarrollo de este portfolio está guiado por un **Orchestrator** y 10 subagentes especializados definidos en [`.claude/agents/`](.claude/agents/), cada uno con una responsabilidad única (SRP). El detalle completo — diagrama, ejemplos de delegación, cómo añadir agentes nuevos y cómo mantener el sistema — está en [`docs/09-workflow-agentes.md`](docs/09-workflow-agentes.md). Esta sección es el resumen operativo.
 
 ### Arquitectura general
 
 No existe un agente único que resuelva todo. `orchestrator` analiza cada petición, la descompone por dominio y delega en el especialista correspondiente:
 
-| Agente | Responsabilidad única |
-|---|---|
-| `orchestrator` | Analizar, descomponer, delegar, validar el resultado final |
-| `frontend-architect` | Arquitectura React/TypeScript, estructura, estado |
-| `ui-designer` | Layout, sistema visual, responsive |
-| `design-engineer` | Motion, microinteracciones, easter eggs |
-| `content-writer` | Todo el texto en español |
-| `github-manager` | READMEs, CI, releases, perfil de GitHub |
-| `testing-engineer` | Vitest, React Testing Library, Playwright |
-| `performance-engineer` | Lighthouse, bundle, Core Web Vitals |
-| `accessibility-engineer` | WCAG, teclado, ARIA, contraste |
-| `code-reviewer` | Revisión final — nunca desarrolla, solo aprueba o devuelve hallazgos |
+| Agente                   | Responsabilidad única                                                                    |
+| ------------------------ | ---------------------------------------------------------------------------------------- |
+| `orchestrator`           | Analizar, descomponer, delegar, validar el resultado final                               |
+| `staff-engineer`         | Visión técnica global — valida decisiones arquitectónicas grandes/nuevas, mentor técnico |
+| `frontend-architect`     | Ejecución de la arquitectura React/TypeScript del día a día, estructura, estado          |
+| `ui-designer`            | Layout, sistema visual, responsive                                                       |
+| `design-engineer`        | Motion, microinteracciones, easter eggs                                                  |
+| `content-writer`         | Todo el texto en español                                                                 |
+| `github-manager`         | READMEs, CI, releases, perfil de GitHub                                                  |
+| `testing-engineer`       | Vitest, React Testing Library, Playwright                                                |
+| `performance-engineer`   | Lighthouse, bundle, Core Web Vitals                                                      |
+| `accessibility-engineer` | WCAG, teclado, ARIA, contraste                                                           |
+| `code-reviewer`          | Revisión final — nunca desarrolla, solo aprueba o devuelve hallazgos                     |
 
 ### Flujo de trabajo recomendado
 
 ```
-Orchestrator → Frontend Architect → (UI Designer + Design Engineer + Content Writer, en paralelo)
+Orchestrator → Staff Engineer (solo si la tarea activa sus disparadores) → Frontend Architect
+            → (UI Designer + Design Engineer + Content Writer, en paralelo)
             → (Testing Engineer + Accessibility Engineer, en paralelo) → Performance Engineer
             → Code Reviewer → Merge
 ```
+
+`staff-engineer` no interviene en trabajo rutinario ya cubierto por patrones existentes — solo cuando `frontend-architect` va a tomar una decisión grande o nueva (nueva librería importante, cambio de estructura, refactor grande, tecnología nueva; ver disparadores completos en `staff-engineer.md`).
 
 `github-manager` es transversal: interviene siempre que hay que documentar o publicar, no en un punto fijo del flujo.
 

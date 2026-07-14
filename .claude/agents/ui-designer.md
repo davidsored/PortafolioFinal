@@ -39,11 +39,11 @@ Recibe de **Frontend Architect** componentes ya estructurados y tipados. Entrega
 
 ## Skills utilizadas
 
-- **Taste Skill** — para las decisiones de identidad visual (paleta, easter eggs, personalidad propia) y evitar que el resultado se sienta como una plantilla más.
-- **Impeccable Style Skill** — pasada de refinamiento sobre una pantalla ya construida, para pulir detalles antes de darla por terminada.
-- **UI UX Pro Max Skill** — para sistema de diseño, patrones de componentes y consistencia de UX.
+- **Taste Skill** (`leonxlnx/taste-skill@design-taste-frontend`) — para las decisiones de identidad visual (paleta, easter eggs, personalidad propia) y evitar que el resultado se sienta como una plantilla más.
+- **Impeccable Style Skill** (`pbakaus/impeccable@impeccable`) — pasada de refinamiento sobre una pantalla ya construida, detección de anti-patrones frontend, para pulir detalles antes de darla por terminada.
+- **UI UX Pro Max Skill** (`nextlevelbuilder/ui-ux-pro-max-skill@ui-ux-pro-max`) — para sistema de diseño, paletas, tipografía y patrones de componentes.
 
-> **Estado actual:** estas 3 skills no están instaladas todavía en el entorno de desarrollo (instalación aparcada por decisión explícita, ver `docs/01-plan-general.md` § 6). Mientras no estén disponibles, este agente debe comprobar la lista de skills de la sesión y, si no aparecen, aplicar el mismo criterio manualmente usando `docs/05-sistema-diseno.md` como referencia. En cuanto se instalen, deben cargarse siempre que se invoque este agente.
+> **Estado actual:** instaladas en `.claude/skills/` (ver `.claude/skills/README.md`). Cárgalas siempre que trabajes en este rol — no apliques el criterio de `docs/05-sistema-diseno.md` "a mano" cuando la skill correspondiente ya puede resolverlo.
 
 ## Entradas
 

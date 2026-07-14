@@ -2,16 +2,16 @@
 
 ## 1. Resumen de la decisión
 
-| Capa | Elección | Alternativa descartada |
-|---|---|---|
-| Framework | **Next.js 15 (App Router) + React 19 + TypeScript** | Vite + React Router SPA |
-| Estilos | **Tailwind CSS v4** + tokens en CSS variables | CSS Modules puro |
-| Animación | **Motion** (antes Framer Motion) | CSS-only / GSAP |
-| Contenido | Archivos TS tipados (`/content`) | CMS headless |
-| Formulario contacto | Server Action de Next.js + Resend | Backend propio con Express/ASP.NET |
-| Testing | Vitest + React Testing Library + Playwright (smoke) | Jest |
-| Deploy | **Vercel** | Render |
-| Analítica | Vercel Analytics (opcional, sin cookies de terceros) | Google Analytics |
+| Capa                | Elección                                             | Alternativa descartada             |
+| ------------------- | ---------------------------------------------------- | ---------------------------------- |
+| Framework           | **Next.js 15 (App Router) + React 19 + TypeScript**  | Vite + React Router SPA            |
+| Estilos             | **Tailwind CSS v4** + tokens en CSS variables        | CSS Modules puro                   |
+| Animación           | **Motion** (antes Framer Motion)                     | CSS-only / GSAP                    |
+| Contenido           | Archivos TS tipados (`/content`)                     | CMS headless                       |
+| Formulario contacto | Server Action de Next.js + Resend                    | Backend propio con Express/ASP.NET |
+| Testing             | Vitest + React Testing Library + Playwright (smoke)  | Jest                               |
+| Deploy              | **Vercel**                                           | Render                             |
+| Analítica           | Vercel Analytics (opcional, sin cookies de terceros) | Google Analytics                   |
 
 ## 2. Por qué Next.js y no una SPA React "pura"
 
@@ -36,30 +36,31 @@ Todo el contenido (proyectos, stack, textos de secciones) vive en `/content/*.ts
 
 ## 4. Modo claro/oscuro
 
-- Basado en CSS variables (`--color-bg`, `--color-fg`, `--color-accent`, etc.) definidas en `globals.css` bajo `:root` y `[data-theme="dark"]`.
-- Persistencia en `localStorage` + respeto inicial de `prefers-color-scheme` (sin flash de tema incorrecto, usando un script inline mínimo antes de hidratar, patrón estándar de Next.js).
-- El toggle es un componente propio (`ThemeToggle`), no una librería — es poco código y es justo el tipo de detalle que un revisor técnico valora.
+- Basado en CSS variables (`--color-bg`, `--color-fg`, `--color-accent`, etc.) definidas en `globals.css` bajo `:root` (oscuro, por defecto) y `[data-theme="light"]`.
+- **Decisión revisada en Fase 1** (documentada aquí para no desincronizar el `docs/` del código real): la persistencia y el script anti-flash se resuelven con **`next-themes`** (`attribute="data-theme"`, `defaultTheme="system"`, `enableSystem`) en vez de un script inline propio. Motivo: `next-themes` resuelve exactamente el mismo problema (persistencia en `localStorage`, respeto de `prefers-color-scheme`, sin flash de tema incorrecto) con una librería de una sola responsabilidad, muy pequeña y ampliamente usada en el ecosistema Next.js — reimplementar el script a mano no aportaba nada sobre usar la herramienta ya estándar para esto, así que se prefirió no reinventarlo (ver `docs/01-plan-general.md` — dependencia ya evaluada como justificada en Fase 0).
+- El toggle (`ThemeToggle`, en `components/ui/`) sí es un componente propio que consume el hook `useTheme` de `next-themes` — la librería resuelve la persistencia/hidratación, no la interfaz visual del interruptor.
 
 ## 5. El único "backend": formulario de contacto
 
-Justificación explícita del brief ("no crear backend propio salvo que exista una razón clara"): un formulario de contacto necesita *algún* punto de envío de email, y exponer una API key de un proveedor de email en el cliente es inseguro.
+Justificación explícita del brief ("no crear backend propio salvo que exista una razón clara"): un formulario de contacto necesita _algún_ punto de envío de email, y exponer una API key de un proveedor de email en el cliente es inseguro.
 
 Solución mínima: un **Server Action** de Next.js (código que corre en el servidor de Vercel, no un servicio nuevo que mantener) que llama a la API de **Resend** (o similar) para enviar el email. No hay base de datos, no hay servidor propio, no hay infraestructura que monitorizar. Alternativa aún más simple si se quiere cero backend: `mailto:` directo — se documenta como fallback si Resend no se activa a tiempo.
 
 ## 6. Animaciones y microinteracciones
 
-- Librería: **Motion** (`motion/react`), estándar de facto en React 19, usada para: aparición de secciones al hacer scroll, transición de tema, hover en tarjetas de proyecto, transición de página.
+- Librería: **Motion** (`motion/react`), estándar de facto en React 19, usada para: aparición de secciones al hacer scroll, transición de tema, hover en tarjetas de proyecto.
+- **Excepción (Fase 5, validada por staff-engineer): la transición de página es CSS, no Motion.** `template.tsx` es el entry cliente raíz del App Router, e importar `motion/react` ahí hacía que Turbopack generara dos grafos cliente sin deduplicar la librería (~88 KB gz duplicados en el bundle de todas las páginas, medidos en la auditoría de performance de Fase 5). El fade se reescribió como animación CSS (`.page-fade` en `globals.css`, mismos 0.2s y mismo easing `EASE_OUT`), idéntico para el usuario y envuelto en `@media (prefers-reduced-motion: no-preference)`. Es una excepción puntual documentada en `AGENTS.md` §UI/UX; el resto de animaciones siguen pasando por Motion.
 - Regla dura: toda animación respeta `prefers-reduced-motion`. Esto es accesibilidad, no un "nice to have".
 - Los easter eggs (ver [05-sistema-diseno.md](./05-sistema-diseno.md)) se implementan como componentes aislados y perezosos (`dynamic import`) para que no afecten al bundle principal si el usuario nunca los activa.
 
 ## 7. Testing
 
-| Tipo | Herramienta | Qué cubre |
-|---|---|---|
-| Unitario | Vitest | Utilidades puras (formateo, cálculo de tema, helpers de contenido) |
-| Componente | React Testing Library | Componentes con lógica (ThemeToggle, ProjectCard, Formulario de contacto) |
-| E2E smoke | Playwright | 1-2 flujos críticos: navegación Home → ficha de proyecto, envío de formulario |
-| Accesibilidad | `@axe-core/react` en dev + chequeo manual con lector de pantalla antes de publicar | Contraste, roles ARIA, navegación por teclado |
+| Tipo          | Herramienta                                                                        | Qué cubre                                                                     |
+| ------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Unitario      | Vitest                                                                             | Utilidades puras (formateo, cálculo de tema, helpers de contenido)            |
+| Componente    | React Testing Library                                                              | Componentes con lógica (ThemeToggle, ProjectCard, Formulario de contacto)     |
+| E2E smoke     | Playwright                                                                         | 1-2 flujos críticos: navegación Home → ficha de proyecto, envío de formulario |
+| Accesibilidad | `@axe-core/react` en dev + chequeo manual con lector de pantalla antes de publicar | Contraste, roles ARIA, navegación por teclado                                 |
 
 No se persigue el 100% de cobertura (no aporta valor en un portfolio); se prueba lo que tiene lógica, no lo que es JSX puro de presentación. Detalle ampliado en [`AGENTS.md`](../AGENTS.md).
 

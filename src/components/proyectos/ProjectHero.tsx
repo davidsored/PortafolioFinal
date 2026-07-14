@@ -1,0 +1,52 @@
+import Image from "next/image";
+
+import { Button } from "@/components/ui/Button";
+import type { Proyecto } from "@/content/types";
+
+import { TechBadgeList } from "./TechBadgeList";
+
+export function ProjectHero({ proyecto }: { proyecto: Proyecto }) {
+  return (
+    <div className="border-border border-b pb-10">
+      <h1 className="font-display text-fg text-3xl font-semibold sm:text-4xl">{proyecto.titulo}</h1>
+      <p className="text-fg-muted mt-3 max-w-2xl text-lg">{proyecto.descripcionCorta}</p>
+
+      <div className="mt-6">
+        <TechBadgeList tecnologias={proyecto.tecnologias} />
+      </div>
+
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Button href={proyecto.repoUrl} variant="ghost">
+          Ver repositorio
+        </Button>
+        {proyecto.demoUrl ? (
+          <Button
+            href={proyecto.demoUrl}
+            aria-label={`Ver demo de ${proyecto.titulo} (se abre en una pestaña nueva)`}
+          >
+            Ver demo
+          </Button>
+        ) : (
+          proyecto.estadoDemo && (
+            <span className="border-border text-fg-muted inline-flex h-11 items-center rounded-md border border-dashed px-6 text-sm font-medium">
+              {proyecto.estadoDemo}
+            </span>
+          )
+        )}
+      </div>
+
+      {proyecto.imagenPortada && (
+        <div className="border-border relative mt-8 aspect-video overflow-hidden rounded-lg border">
+          <Image
+            src={proyecto.imagenPortada}
+            alt={`Captura de ${proyecto.titulo}`}
+            fill
+            sizes="(min-width: 640px) 768px, 100vw"
+            className="object-cover"
+            priority
+          />
+        </div>
+      )}
+    </div>
+  );
+}
