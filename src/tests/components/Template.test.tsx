@@ -1,22 +1,17 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import type { ComponentType, ReactNode } from "react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
-
-const reducedMotion = vi.hoisted(() => ({ value: false }));
-
-vi.mock("motion/react", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("motion/react")>();
-  return {
-    ...actual,
-    useReducedMotion: () => reducedMotion.value,
-  };
-});
+import { describe, expect, it, vi } from "vitest";
 
 /**
  * `template.tsx` guarda la bandera `isInitialLoad` a nivel de módulo, así que
  * cada test importa una copia fresca con `vi.resetModules()` para controlar
  * si el mount bajo prueba es el primero (carga inicial, SSR/hidratación) o
  * uno posterior (remount por navegación cliente del App Router).
+ *
+ * No hay test de `prefers-reduced-motion` a propósito: el fade vive en
+ * globals.css bajo `@media (prefers-reduced-motion: no-preference)` y JSDOM
+ * no evalúa media queries de CSS, así que no es verificable aquí. Esa
+ * preferencia se cubre en la verificación manual/a11y del área.
  */
 async function loadFreshTemplate(): Promise<ComponentType<{ children: ReactNode }>> {
   vi.resetModules();
@@ -24,12 +19,8 @@ async function loadFreshTemplate(): Promise<ComponentType<{ children: ReactNode 
   return templateModule.default;
 }
 
-beforeEach(() => {
-  reducedMotion.value = false;
-});
-
 describe("Template", () => {
-  it("no aplica opacity 0 en el primer mount (regresión del bloqueante de LCP)", async () => {
+  it("el primer mount no lleva la clase page-fade ni opacity inline (regresión del bloqueante de LCP)", async () => {
     const Template = await loadFreshTemplate();
 
     const { container } = render(
@@ -40,10 +31,11 @@ describe("Template", () => {
 
     const wrapper = container.firstElementChild as HTMLElement;
     expect(wrapper.tagName).toBe("DIV");
-    expect(wrapper.style.opacity).not.toBe("0");
+    expect(wrapper).not.toHaveClass("page-fade");
+    expect(wrapper.style.opacity).toBe("");
   });
 
-  it("un mount posterior (navegación cliente) arranca oculto y anima a visible", async () => {
+  it("un mount posterior (navegación cliente) lleva la clase page-fade", async () => {
     const Template = await loadFreshTemplate();
 
     const primeraCarga = render(
@@ -60,21 +52,6 @@ describe("Template", () => {
     );
 
     const wrapper = container.firstElementChild as HTMLElement;
-    expect(wrapper.style.opacity).toBe("0");
-
-    await waitFor(() => expect(wrapper.style.opacity).toBe("1"), { timeout: 2000 });
-  });
-
-  it("con prefers-reduced-motion renderiza los children directos, sin wrapper de motion", async () => {
-    reducedMotion.value = true;
-    const Template = await loadFreshTemplate();
-
-    const { container } = render(
-      <Template>
-        <p>Contenido accesible</p>
-      </Template>,
-    );
-
-    expect(screen.getByText("Contenido accesible").parentElement).toBe(container);
+    expect(wrapper).toHaveClass("page-fade");
   });
 });

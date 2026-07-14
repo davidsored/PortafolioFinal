@@ -39,13 +39,6 @@ export const staggerContainer: Variants = {
   },
 };
 
-/** Fade simple para transición entre páginas del App Router. */
-export const pageFade: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.2, ease: EASE_OUT } },
-  exit: { opacity: 0, transition: { duration: 0.15, ease: EASE_OUT } },
-};
-
 /** Micro-pulso muy sutil para el glow del CTA principal del Hero. */
 export const pulseGlow: TargetAndTransition = {
   opacity: [0.6, 1, 0.6],

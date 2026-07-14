@@ -90,6 +90,29 @@ body {
   }
 }
 
+/*
+ * Fade de entrada entre páginas (usado por `src/app/template.tsx`). Vive en
+ * CSS y no en motion/react a propósito: importar motion en el entry cliente
+ * raíz lo duplicaba en dos grafos de Turbopack (~88 KB gz extra en todas las
+ * páginas, Fase 5) — ver docs/02-arquitectura.md §6. El easing es el EASE_OUT
+ * de lib/motion-variants.ts, para que el fade sea idéntico al que daba motion.
+ * Envuelto en `no-preference`: bajo prefers-reduced-motion no hay animación.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes page-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .page-fade {
+    animation: page-fade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

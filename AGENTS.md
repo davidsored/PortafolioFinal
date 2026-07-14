@@ -54,7 +54,7 @@ Criterio de qué probar (ver también [`docs/02-arquitectura.md`](./docs/02-arqu
 ## UI/UX
 
 - Seguir los tokens de [`docs/05-sistema-diseno.md`](./docs/05-sistema-diseno.md) (color, tipografía, espaciado, radios) en vez de introducir valores sueltos. Si Tailwind no cubre un token, se añade a `tailwind.config.ts`, no se hardcodea en el componente.
-- Toda animación pasa por `motion/react` y respeta `prefers-reduced-motion`. No usar `setTimeout`/CSS animations sueltas para microinteracciones nuevas sin pasar por el mismo sistema.
+- Toda animación pasa por `motion/react` y respeta `prefers-reduced-motion` (excepción documentada: transición de página en `template.tsx`, ver `docs/02-arquitectura.md`). No usar `setTimeout`/CSS animations sueltas para microinteracciones nuevas sin pasar por el mismo sistema.
 - Modo claro y oscuro se verifican juntos siempre — no se acepta un cambio de UI probado solo en un tema.
 - Responsive: mobile-first, breakpoints de Tailwind por defecto. Cualquier componente nuevo se revisa como mínimo en 375px y 1280px antes de darlo por terminado.
 - Accesibilidad no es una fase aparte: cualquier elemento interactivo lleva `aria-label`/rol correcto en el mismo commit en que se crea, no en un PR de "limpieza" posterior.

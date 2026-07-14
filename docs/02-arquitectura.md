@@ -48,7 +48,8 @@ Solución mínima: un **Server Action** de Next.js (código que corre en el serv
 
 ## 6. Animaciones y microinteracciones
 
-- Librería: **Motion** (`motion/react`), estándar de facto en React 19, usada para: aparición de secciones al hacer scroll, transición de tema, hover en tarjetas de proyecto, transición de página.
+- Librería: **Motion** (`motion/react`), estándar de facto en React 19, usada para: aparición de secciones al hacer scroll, transición de tema, hover en tarjetas de proyecto.
+- **Excepción (Fase 5, validada por staff-engineer): la transición de página es CSS, no Motion.** `template.tsx` es el entry cliente raíz del App Router, e importar `motion/react` ahí hacía que Turbopack generara dos grafos cliente sin deduplicar la librería (~88 KB gz duplicados en el bundle de todas las páginas, medidos en la auditoría de performance de Fase 5). El fade se reescribió como animación CSS (`.page-fade` en `globals.css`, mismos 0.2s y mismo easing `EASE_OUT`), idéntico para el usuario y envuelto en `@media (prefers-reduced-motion: no-preference)`. Es una excepción puntual documentada en `AGENTS.md` §UI/UX; el resto de animaciones siguen pasando por Motion.
 - Regla dura: toda animación respeta `prefers-reduced-motion`. Esto es accesibilidad, no un "nice to have".
 - Los easter eggs (ver [05-sistema-diseno.md](./05-sistema-diseno.md)) se implementan como componentes aislados y perezosos (`dynamic import`) para que no afecten al bundle principal si el usuario nunca los activa.
 
