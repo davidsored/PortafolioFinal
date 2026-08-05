@@ -43,6 +43,12 @@ yarn-error.log*
 # Claude Code session-local runtime state (not project config)
 .claude/*.lock
 
+# Skills CLI: `skills update` materializa el contenido real aquí y deja un
+# junction en .claude/skills/<skill> apuntando a esta carpeta (no sobrevive a
+# un clon en otra máquina). La fuente de verdad versionada sigue siendo
+# .claude/skills/ + skills-lock.json.
+/.agents/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
