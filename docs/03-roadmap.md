@@ -70,15 +70,23 @@ El sitio está pulido y listo para la Fase 4 (GitHub y despliegues pendientes).
 
 - Despliegue de la demo de Coworking Manager — la decisión de hosting es de David (comparativa ya entregada; recomendación Render free + Aiven MySQL free). Al desplegarla, actualizar ficha del portfolio y README del repo.
 - ✅ Saneamiento de secretos de `appsettings.json` de `ProyectoWebCoworking` — **resuelto el 14-07-2026**: David rotó las credenciales expuestas (app password de Gmail revocada, contraseña de MySQL cambiada) y el [PR #2](https://github.com/davidsored/ProyectoWebCoworking/pull/2) mergeado saneó `appsettings.json` y el `DbContext`; los valores que quedan en el historial de git están revocados y ya no dan acceso a nada.
-- Bio y repos fijados (pins) del perfil de GitHub — acción manual de David (no automatizable vía API con permisos estándar).
-- [PR #1 de `TennisTournament`](https://github.com/davidsored/TennisTournament/pull/1) — añade el archivo `LICENSE` (MIT) que el README ya referenciaba con enlace roto; abierto, pendiente de revisión y merge por David.
+- ✅ Bio y repos fijados (pins) del perfil de GitHub — **hecho por David** (verificado vía API el 15-07-2026: bio rellena y 3 repos fijados — PokedexIA, ProyectoWebCoworking, TennisTournament), coherente con [08-checklist-publicacion.md](./08-checklist-publicacion.md) § GitHub.
+- ✅ [PR #1 de `TennisTournament`](https://github.com/davidsored/TennisTournament/pull/1) — **mergeado el 09-07-2026**: añade el archivo `LICENSE` (MIT) que el README ya referenciaba con enlace roto.
 - Enlace TennisTournament → portfolio en su README — pospuesto a la Fase 5 (requiere el portfolio publicado).
 
-## Fase 5 — Lanzamiento
+## Fase 5 — Lanzamiento ✅ completada (15-07-2026)
 
-- Checklist final ([08-checklist-publicacion.md](./08-checklist-publicacion.md)) completo.
-- Publicar en Vercel con dominio propio o subdominio `.vercel.app`.
-- Revisión conjunta portfolio ↔ LinkedIn (coherencia de descripción, keywords, enlaces cruzados) — explícitamente pospuesta a después de tener el portfolio terminado, tal como pidió David.
+- [x] Checklist final ([08-checklist-publicacion.md](./08-checklist-publicacion.md)) completo: todos los bloqueantes en verde, con evidencias anotadas ítem a ítem. Destacado: Lighthouse sobre producción (14-07-2026) con Performance Home 91 / ficha de proyecto 95 / Contacto 92,5 (medianas) y 100 en Accessibility y SEO en todas las pasadas; lint/typecheck/22 tests/E2E/CI en verde; sin API keys en el bundle cliente (verificado sobre `.next/static`).
+- [x] Publicado en Vercel: https://portafolio-final-eosin.vercel.app (subdominio `.vercel.app`, que esta fase admite; el dominio propio `dsor.es` queda como pendiente, ver abajo). `RESEND_API_KEY` configurada en Vercel y formulario de contacto verificado end-to-end en producción el 15-07-2026.
+
+Matiz de Lighthouse: la única varianza residual entre pasadas es el `elementRenderDelay` del LCP de la Home — mejora futura opcional, no bloqueante.
+
+**Pendiente, sin bloquear el cierre de la fase:**
+
+- Conectar `dsor.es` en Vercel — acción de David. Los metadatos y el sitemap ya apuntan a `www.dsor.es` y cuadrarán al conectarlo (mientras tanto, el portfolio vive en la URL provisional `.vercel.app`).
+- Enlace TennisTournament → portfolio en su README y quitar el "(próximamente)" — cuando David decida la URL definitiva (dominio propio o `.vercel.app`).
+- Revisión conjunta portfolio ↔ LinkedIn (coherencia de descripción, keywords, enlaces cruzados) — explícitamente pospuesta a después del lanzamiento, tal como pidió David.
+- Despliegue de la demo de Coworking Manager y capturas opcionales de TaskPlanner/OnePieceAPI — sin cambios, se mantienen como estaban en las Fases 2 y 4.
 
 ## Fase 6 — Futuro (fuera de alcance de v1, arquitectura ya preparada)
 
