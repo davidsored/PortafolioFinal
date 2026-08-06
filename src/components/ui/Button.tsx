@@ -42,6 +42,7 @@ export function Button(props: LinkButtonProps | NativeButtonProps) {
           href={href}
           target={href.startsWith("http") ? "_blank" : undefined}
           rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+          download={isStaticFile ? true : undefined}
           className={classes}
           {...anchorProps}
         />
