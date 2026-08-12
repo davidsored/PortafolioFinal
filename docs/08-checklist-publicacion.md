@@ -50,7 +50,7 @@ No se publica hasta que todo lo marcado como **bloqueante** esté en verde. Lo m
 
 - [x] **(Bloqueante)** Ninguna API key en el código cliente (verificar bundle final, no solo el código fuente). ✓ Verificado sobre `.next/static` (bundle final).
 - [x] **(Bloqueante)** Formulario de contacto valida y sanea input en el servidor (Server Action), no solo en el cliente. ✓
-- [ ] _(Recomendado)_ Rate limiting básico en el envío del formulario para evitar spam/abuso. ✗ **No implementado — pendiente aceptado**, no bloquea el lanzamiento.
+- [x] _(Recomendado)_ Rate limiting básico en el envío del formulario para evitar spam/abuso. ✓ Implementado en memoria por IP en `sendContactEmail` (máx. 3 envíos / 10 min, best-effort en serverless); `pnpm lint && pnpm typecheck` en verde.
 
 ## GitHub
 

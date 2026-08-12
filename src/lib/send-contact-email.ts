@@ -1,5 +1,6 @@
 "use server";
 
+import { headers } from "next/headers";
 import { Resend } from "resend";
 
 import { perfil } from "@/content/perfil";
@@ -13,6 +14,35 @@ export interface ContactFormState {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const RATE_LIMIT_MAX_REQUESTS = 3;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+
+// Estado en memoria del proceso: en Vercel (serverless) cada instancia/cold
+// start tiene su propio mapa, así que esto es un límite "best effort", no
+// estricto. Suficiente para frenar spam básico sin añadir infraestructura
+// (Redis, etc.) para un portfolio de bajo tráfico.
+const requestTimestampsByIp = new Map<string, number[]>();
+
+async function isRateLimited(): Promise<boolean> {
+  const headerList = await headers();
+  const forwardedFor = headerList.get("x-forwarded-for");
+  const ip = forwardedFor?.split(",")[0]?.trim() || "unknown";
+
+  const now = Date.now();
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+  const previousTimestamps = requestTimestampsByIp.get(ip) ?? [];
+  const recentTimestamps = previousTimestamps.filter((timestamp) => timestamp > windowStart);
+
+  if (recentTimestamps.length >= RATE_LIMIT_MAX_REQUESTS) {
+    requestTimestampsByIp.set(ip, recentTimestamps);
+    return true;
+  }
+
+  recentTimestamps.push(now);
+  requestTimestampsByIp.set(ip, recentTimestamps);
+  return false;
+}
+
 export async function sendContactEmail(
   _prevState: ContactFormState,
   formData: FormData,
@@ -21,6 +51,15 @@ export async function sendContactEmail(
   const email = String(formData.get("email") ?? "").trim();
   const mensaje = String(formData.get("mensaje") ?? "").trim();
   const values = { nombre, email, mensaje };
+
+  if (await isRateLimited()) {
+    return {
+      status: "error",
+      message:
+        "Has enviado demasiados mensajes en poco tiempo. Inténtalo de nuevo en unos minutos.",
+      values,
+    };
+  }
 
   if (!nombre || nombre.length > 100) {
     const fieldMessage = "Indica un nombre válido (máx. 100 caracteres).";
