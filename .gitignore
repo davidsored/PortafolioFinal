@@ -43,6 +43,11 @@ yarn-error.log*
 # Claude Code session-local runtime state (not project config)
 .claude/*.lock
 
+# Git worktrees efímeros de Claude Code: copias completas del repo que Git ya
+# gestiona aparte; ignorarlas evita que un worktree huérfano (p. ej. tras un
+# `git worktree prune`) aparezca como archivos sin seguimiento.
+/.claude/worktrees/
+
 # Impeccable live-mode overlay server: PID/port/token of a local process,
 # regenerated each session. .impeccable/critique/ IS versioned (design
 # snapshots meant to persist).

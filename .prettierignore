@@ -5,3 +5,6 @@ public
 
 # Vendored skill packages — reformatting would break skills-lock.json hashes
 .claude/skills
+
+# Git worktrees efímeros de Claude Code — formatearlos reescribiría archivos de otra rama en curso
+.claude/worktrees

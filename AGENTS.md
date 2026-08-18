@@ -6,7 +6,7 @@ Contexto crítico que cualquier agente debe conocer antes de tocar código:
 
 - El portfolio está en **español únicamente**, sin i18n. No añadir librerías de internacionalización.
 - Los **3 proyectos principales** son Coworking Manager, CourtManager (repo `TennisTournament`) y PokedexIA. Sus textos ya están redactados en [`docs/06-estrategia-contenido.md`](./docs/06-estrategia-contenido.md) — no reescribirlos libremente, son producto de una revisión con el propio David.
-- **PokedexIA no tiene funcionalidad de IA real.** No añadir ninguna mención de IA a su copy ni a su código sin que David lo pida explícitamente — es una decisión consciente pendiente de diseño futuro, no un descuido.
+- **PokedexIA sí tiene funcionalidad de IA real desde la v0.5.0:** un chat RAG sobre los 251 Pokémon del catálogo, en producción. Su copy (`content/proyectos/pokedexia.ts`) ya refleja esa arquitectura y está revisado por David — no reescribirlo libremente, igual que el resto de textos de proyecto.
 - No introducir CMS, backend propio ni dependencias que contradigan [`docs/02-arquitectura.md`](./docs/02-arquitectura.md) sin justificarlo primero.
 
 ## Arquitectura
