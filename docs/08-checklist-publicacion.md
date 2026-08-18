@@ -62,10 +62,13 @@ No se publica hasta que todo lo marcado como **bloqueante** esté en verde. Lo m
 
 - [x] **(Bloqueante)** Build de producción (`next build`) sin errores ni warnings de tipo críticos. ✓
 - [x] **(Bloqueante)** Variables de entorno de producción configuradas en Vercel (clave de Resend, etc.), nunca en el repo. ✓ `RESEND_API_KEY` en Vercel; formulario verificado end-to-end en producción el 15-07-2026.
-- [ ] _(Recomendado)_ Dominio propio configurado (si se adquiere) o subdominio `.vercel.app` verificado y estable. **PENDIENTE (dominio propio)**: publicado y estable en https://portafolio-final-eosin.vercel.app, pero `dsor.es` aún sin conectar en Vercel. Los metadatos/sitemap ya apuntan a `www.dsor.es` y cuadrarán al conectarlo.
+- [x] _(Recomendado)_ Dominio propio configurado (si se adquiere) o subdominio `.vercel.app` verificado y estable. ✓ Verificado el 12-08-2026: `https://www.dsor.es` responde y sirve el portfolio (redirige a `https://dsor.es`, contenido de la home cargado correctamente). Dominio propio conectado en Vercel; ya no depende del subdominio `.vercel.app`. Metadatos/sitemap ya apuntaban a `www.dsor.es`, ahora cuadran con el dominio real en producción.
 
 ## Después de publicar (no bloquea el lanzamiento, pero está agendado)
 
-- [ ] Revisión conjunta de coherencia entre portfolio y LinkedIn (descripción, keywords, enlaces cruzados) — pospuesta por decisión de David a después del lanzamiento.
+- [x] Revisión conjunta de coherencia entre portfolio y LinkedIn (descripción, keywords, enlaces cruzados). ✓ Revisado el 12-08-2026 sobre capturas del perfil (`linkedin.com/in/david-suarez-otero-redondo`). Hallazgos:
+  - Titular ("Desarrollador Web Junior | C# y ASP.NET | JavaScript | SQL | HTML/CSS") coherente con el stack del portfolio, aunque no menciona Blazor WebAssembly (sí presente en el hero del portfolio) — **pendiente aceptado**, no bloquea nada, valorar añadirlo al titular.
+  - No se observa en las capturas ningún enlace visible al portfolio (`www.dsor.es`) en el perfil (ni en "Información de contacto" ni en una sección "Destacado"/Featured) — **recomendado añadir** para cerrar el enlace cruzado LinkedIn → portfolio.
+  - El perfil incluye aptitudes y un Máster en Desarrollo con IA (BIG school) con menciones activas a IA/Prompt Engineering y herramientas como Claude Code/Copilot/Gemini/ChatGPT. Esto es coherente con David como desarrollador (aprendizaje activo de IA), pero **David debe confirmar** que no contradice la narrativa del portfolio, en particular la nota de transparencia de PokedexIA (que aclara que ese proyecto concreto no tiene IA real todavía) — no se detecta contradicción directa, solo un matiz a vigilar si se amplía la sección "Acerca de" de LinkedIn.
 - [ ] Resolver despliegue pendiente de `ProyectoWebCoworking` y actualizar su ficha con el enlace real — pendiente de la decisión de hosting de David (comparativa entregada en la Fase 4).
 - [ ] Sesión dedicada para decidir la función de IA real de `PokedexIA`.

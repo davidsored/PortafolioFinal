@@ -22,6 +22,9 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Vendored skill packages (installed via the Skills CLI) — not our code.
     ".claude/skills/**",
+    // Git worktrees efímeros de Claude Code: copias completas del repo (no
+    // versionadas) que duplicarían el lint y arrastran los scripts vendorizados.
+    ".claude/worktrees/**",
   ]),
 ]);
 
